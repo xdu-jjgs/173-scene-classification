@@ -1,0 +1,13 @@
+DATASET:
+    NAME: 'gf2-building-raw'
+    ROOT: 'E:/zts/dataset/GF2'
+    MEANS: # TODO: measure mean
+        - 0.5
+        - 0.5
+        - 0.5
+        - 0.5
+    STDS: # TODO: measure std
+        - 1
+        - 1
+        - 1
+        - 1

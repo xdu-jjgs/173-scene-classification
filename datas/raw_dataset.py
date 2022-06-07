@@ -27,10 +27,9 @@ class RawSARMSI(Dataset):
         sen1 = self.data['sen1'][item]  # N*32*32*8
         sen2 = self.data['sen2'][item]  # N*32*32*10
         label = np.argmax(self.data['label'][item])  # N*17, one-hot
-
-        if self.transform is not None:
-            sen1, sen2, label = self.transform(sen1, sen2, label)
         sens = (sen1, sen2)
+        if self.transform is not None:
+            sens, label = self.transform(sens, label)
         return sens, label
 
     @property
