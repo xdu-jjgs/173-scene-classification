@@ -52,9 +52,13 @@ TODO
 
 ## <a name='preprocess'> </a>数据预处理
 ### SAR_MSI数据集
-
+包括：
+1. 筛选数据
+2. 重编号标签
+3. 转为Tensor
+4. Z-Score归一化
 ```shell
 python preprocess.py configs/preprocess/sar_msi_3090.yaml ^
 --path E:/zts/dataset/SAR_MSI_preprocessed
-
 ```
+### VNR_MSI数据集

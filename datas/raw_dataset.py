@@ -63,3 +63,5 @@ class RawSARMSI(Dataset):
             'bare soil/ sand',  # 沙漠地
             'water'  # 水域
         ]
+
+class RawVNRMSI(Dataset):

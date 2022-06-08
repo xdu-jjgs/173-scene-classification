@@ -9,7 +9,7 @@ from datas.raw_dataset import RawSARMSI
 
 def build_transform():
     if CFG.DATASET.NAME == 'RAW_SAR_MSI':
-        class_interest = [0, 9, 10, 13, 14, 16]
+        class_interest = CFG.DATASET.CLASSES_INTEREST
         transform = transforms.Compose([
             transforms.LabelFilter(class_interest),
             transforms.LabelRenumber(class_interest),
