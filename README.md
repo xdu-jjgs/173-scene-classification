@@ -49,3 +49,12 @@ TODO
 
 ## <a name='structure'> </a>项目结构
 TODO
+
+## <a name='preprocess'> </a>数据预处理
+### SAR_MSI数据集
+
+```shell
+python preprocess.py configs/preprocess/sar_msi_3090.yaml ^
+--path E:/zts/dataset/SAR_MSI_preprocessed
+
+```

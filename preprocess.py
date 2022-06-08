@@ -1,8 +1,8 @@
 import os
+import json
+import pickle
 import argparse
-import pathlib
 
-import scipy.io as sio
 
 from configs import CFG
 from datetime import datetime
@@ -33,19 +33,33 @@ def main():
     CFG.merge_from_file(args.config)
 
     splits = ['train', 'val', 'test']
-    for split in splits:
+    # TODO: add tqdm
+    for index, split in enumerate(splits):
         save_path = os.path.join(args.path, split)
         if not os.path.exists(save_path):
             os.makedirs(save_path, exist_ok=True)
 
+        sample_num = CFG.DATASET.SAMPLE_NUM[index]
+        count = 0
         dataset = build_dataset(split)
         for sample in dataset:
             data, label = sample
             if data is not None:
-                sio.savemat(os.path.join(save_path, '.mat'),
-                            {
-                                'sen1': data[0],
-                                'sen2': data[1],
-                                'label': label
-                            })
+                count += 1
+                # print(data[0].shape, data[1].shape, label)
+                data = {
+                    'sen1': data[0],
+                    'sen2': data[1],
+                    'label': label
+                }
 
+                fw = open(os.path.join(save_path, '{}_{}.pkl'.format(count, label)), 'wb')
+                pickle.dump(data, fw)
+                fw.close()
+
+                if count >= sample_num:
+                    break
+
+
+if __name__ == '__main__':
+    main()

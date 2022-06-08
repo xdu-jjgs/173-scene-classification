@@ -1,6 +1,8 @@
 h5py
+yacs
 numpy
 torch
+torchfile
 scipy
 sklearn
 scikit-learn

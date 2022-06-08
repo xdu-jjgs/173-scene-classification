@@ -8,14 +8,16 @@ from datas.raw_dataset import RawSARMSI
 
 
 def build_transform():
-    if CFG.DATASET.NAME == 'raw_sar_msi':
+    if CFG.DATASET.NAME == 'RAW_SAR_MSI':
         class_interest = [0, 9, 10, 13, 14, 16]
         transform = transforms.Compose([
-            transforms.SampleSelect(class_interest),
+            transforms.LabelFilter(class_interest),
             transforms.LabelRenumber(class_interest),
             transforms.ToTensorPreData(),
-            # TODO: measure
-            transforms.NormalizePreData(mean=CFG.DATASET.MEANS, std=CFG.DATASET.STDS)
+            transforms.NormalizePreData(
+                means=[CFG.DATASET.SEN1.MEANS,CFG.DATASET.SEN2.MEANS],
+                stds=[CFG.DATASET.SEN1.STDS, CFG.DATASET.SEN2.STDS]
+            )
         ])
     else:
         raise NotImplementedError('invalid dataset: {} for transform'.format(CFG.DATASET.NAME))
@@ -24,7 +26,7 @@ def build_transform():
 
 def build_dataset(split: str):
     assert split in ['train', 'val', 'test']
-    if CFG.DATASET.NAME == 'raw_sar_msi':
+    if CFG.DATASET.NAME == 'RAW_SAR_MSI':
         dataset = RawSARMSI(CFG.DATASET.ROOT, split, transform=build_transform())
     else:
         raise NotImplementedError('invalid dataset: {} for cropping'.format(CFG.DATASET.NAME))

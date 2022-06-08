@@ -13,7 +13,8 @@ class Compose(nn.Module):
 
     def forward(self, image, label):
         for transform in self.transforms:
-            image, label = transform(image, label)
+            if image is not None:
+                image, label = transform(image, label)
         return image, label
 
 
@@ -51,6 +52,17 @@ class ToTensor(nn.Module):
         return image, label
 
 
+class ToTensorPreData(nn.Module):
+    def __init__(self):
+        super(ToTensorPreData, self).__init__()
+        self.to_tensor = transforms.ToTensor()
+
+    def forward(self, image, label):
+        if image is not None:
+            image = [self.to_tensor(sen) for sen in image]
+        return image, label
+
+
 class Normalize(nn.Module):
     def __init__(self, mean, std):
         super(Normalize, self).__init__()
@@ -61,40 +73,25 @@ class Normalize(nn.Module):
         return image, label
 
 
-class ToTensorPreData(ToTensor):
-    def __init__(self):
-        super(ToTensorPreData, self).__init__()
+class NormalizePreData(nn.Module):
+    def __init__(self, means, stds):
+        super(NormalizePreData, self).__init__()
+        self.means = means
+        self.stds = stds
+        self.normalizes = [transforms.Normalize(mean, std) for mean, std in zip(self.means, self.stds)]
 
     def forward(self, image, label):
-        if image is not None:
-            image = (super(ToTensorPreData, self).forward(sen, label)[0] for sen in image)
+        image = [normalize(sen) for sen, normalize in zip(image, self.normalizes)]
         return image, label
 
 
-class NormalizePreData(Normalize):
-    def __init__(self,mean, std):
-        super(NormalizePreData, self).__init__(mean, std)
-
-    def forward(self, image, label):
-        if image is not None:
-            image = (super(NormalizePreData, self).forward(sen, label)[0] for sen in image)
-        return image, label
-
-
-class SampleSelect(nn.Module):
-    def __init__(self, class_interest, sample_num: int = -1):
-        super(SampleSelect, self).__init__()
+class LabelFilter(nn.Module):
+    def __init__(self, class_interest):
+        super(LabelFilter, self).__init__()
         self.class_interest = class_interest
-        self.class_interest_count = [0] * len(class_interest)
-        self.sample_num = sample_num
 
     def forward(self, image, label):
         if label in self.class_interest:
-            if self.sample_num > 0:
-                if self.class_interest_count[label] > self.sample_num:
-                    return None, label
-                else:
-                    self.class_interest_count[label] += 1
             return image, label
         else:
             return None, label
@@ -106,16 +103,14 @@ class LabelRenumber(nn.Module):
         self.class_interest = class_interest
 
     def forward(self, image, label):
-        if image is not None:
-            label = self.class_interest.index(label)
+        label = self.class_interest.index(label)
         return image, label
 
 
 class ChannelConcat(nn.Module):
-    def __init__(self, class_interest):
+    def __init__(self):
         super(ChannelConcat, self).__init__()
 
     def forward(self, image, label):
-        if image is not None:
-            image = np.concatenate(image, axis=2)
-            return image, label
+        image = np.concatenate(image, axis=2)
+        return image, label
