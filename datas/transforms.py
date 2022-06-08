@@ -71,9 +71,9 @@ class ToTensorPreData(ToTensor):
         return image, label
 
 
-class NormalizePreData(ToTensor):
-    def __init__(self):
-        super(NormalizePreData, self).__init__()
+class NormalizePreData(Normalize):
+    def __init__(self,mean, std):
+        super(NormalizePreData, self).__init__(mean, std)
 
     def forward(self, image, label):
         if image is not None:

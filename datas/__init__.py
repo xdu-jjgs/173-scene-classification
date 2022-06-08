@@ -13,9 +13,9 @@ def build_transform():
         transform = transforms.Compose([
             transforms.SampleSelect(class_interest),
             transforms.LabelRenumber(class_interest),
-            transforms.ToTensor(),
+            transforms.ToTensorPreData(),
             # TODO: measure
-            # transforms.Normalize(mean=CFG.DATASET.MEANS, std=CFG.DATASET.STDS)
+            transforms.NormalizePreData(mean=CFG.DATASET.MEANS, std=CFG.DATASET.STDS)
         ])
     else:
         raise NotImplementedError('invalid dataset: {} for transform'.format(CFG.DATASET.NAME))
