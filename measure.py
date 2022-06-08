@@ -1,4 +1,6 @@
 import os
+from collections import Counter
+
 import h5py
 import pickle
 import numpy as np
@@ -20,14 +22,19 @@ if __name__ == '__main__':
     files = [os.path.join(root, file) for file in os.listdir(root)]
     sen1s = []
     sen2s = []
+    labels = []
     for file in files:
         fo = open(file, 'rb')
         data = pickle.load(fo)
         sen1 = data['sen1'].numpy()
         sen2 = data['sen2'].numpy()
+        label = data['label']
         sen1s.append(sen1)
         sen2s.append(sen2)
+        labels.append(label)
     sen1s = np.array(sen1s).reshape(-1, 8)
     sen2s = np.array(sen2s).reshape(-1, 10)
     print(np.mean(sen1s, axis=0), np.std(sen1s, axis=0))
     print(np.mean(sen2s, axis=0), np.std(sen2s, axis=0))
+    # ({5: 313, 3: 279, 2: 276, 1: 85, 0: 28, 4: 19})
+    print(Counter(labels))
