@@ -1,8 +1,7 @@
 import os
-
 import h5py
+import pickle
 import numpy as np
-
 
 if __name__ == '__main__':
 
@@ -16,3 +15,19 @@ if __name__ == '__main__':
     sen2_means = np.mean(sen2, axis=0)
     sen2_stds = np.std(sen2, axis=0)
     print(sen1_means, sen1_stds, sen2_means, sen2_stds)
+
+    root = r'E:/zts/dataset/SAR_MSI_preprocessed/train'
+    files = [os.path.join(root, file) for file in os.listdir(root)]
+    sen1s = []
+    sen2s = []
+    for file in files:
+        fo = open(file, 'rb')
+        data = pickle.load(fo)
+        sen1 = data['sen1'].numpy()
+        sen2 = data['sen2'].numpy()
+        sen1s.append(sen1)
+        sen2s.append(sen2)
+    sen1s = np.array(sen1s).reshape(-1, 8)
+    sen2s = np.array(sen2s).reshape(-1, 10)
+    print(np.mean(sen1s, axis=0), np.std(sen1s, axis=0))
+    print(np.mean(sen2s, axis=0), np.std(sen2s, axis=0))
