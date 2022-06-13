@@ -58,7 +58,7 @@ TODO
 3. 转为Tensor
 4. Z-Score归一化
 ```shell
-python preprocess.py configs/preprocess/sar_msi_3090.yaml ^
+python preprocess_by_dataset.py configs/preprocess/sar_msi_3090.yaml ^
 --path E:/zts/dataset/SAR_MSI_preprocessed
 ```
 ### VNR_MSI数据集

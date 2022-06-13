@@ -1,9 +1,10 @@
 import os
-from collections import Counter
-
 import h5py
 import pickle
 import numpy as np
+import scipy.io as sio
+
+from collections import Counter
 
 if __name__ == '__main__':
 
@@ -38,3 +39,17 @@ if __name__ == '__main__':
     print(np.mean(sen2s, axis=0), np.std(sen2s, axis=0))
     # ({5: 313, 3: 279, 2: 276, 1: 85, 0: 28, 4: 19})
     print(Counter(labels))
+
+    root = 'E:/zzy/173/data/vnr-gf'
+    files = os.listdir(root)
+    vnrs = []
+    gfs = []
+    for file in files:
+        if file.startswith('vnr'):
+            vnrs.append(sio.loadmat(file))
+        elif file.startswith('gf'):
+            gfs.append(sio.loadmat(file))
+    vnrs = np.array(vnrs).reshape(-1, 3)
+    gfs = np.array(gfs).reshape(-1, 4)
+
+

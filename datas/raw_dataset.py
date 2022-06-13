@@ -1,7 +1,7 @@
 import os
-
 import h5py
 import numpy as np
+import scipy.io as sio
 
 from datas.base import Dataset
 
@@ -20,9 +20,6 @@ class RawSARMSI(Dataset):
 
         self.transform = transform
 
-    def __len__(self):
-        return self.data['label'].shape[0]
-
     def __getitem__(self, item):
         sen1 = self.data['sen1'][item]  # N*32*32*8
         sen2 = self.data['sen2'][item]  # N*32*32*10
@@ -31,6 +28,9 @@ class RawSARMSI(Dataset):
         if self.transform is not None:
             sens, label = self.transform(sens, label)
         return sens, label
+
+    def __len__(self):
+        return self.data['label'].shape[0]
 
     @property
     def num_channels(self):
@@ -64,4 +64,38 @@ class RawSARMSI(Dataset):
             'water'  # 水域
         ]
 
+
 class RawVNRMSI(Dataset):
+    def __init__(self, root, split: str, transform=None):
+        super(RawVNRMSI, self).__init__()
+        self.class_list = ['building', 'cross', 'factory', 'farmland', 'highway', 'lake', 'river']
+        assert split in self.class_list
+
+        self.vnr = sio.loadmat(os.path.join(root, 'vnr_{}.mat'.format(split)))
+        self.gf = sio.loadmat(os.path.join(root, 'gf_{}.mat'.format(split)))
+        self.label = split
+
+        self.transform = transform
+
+    def __getitem__(self, item):
+        vnr = self.vnr['data'][item]
+        gf = self.gf['data'][item]
+        data = (vnr, gf)
+        label = self.label
+        return data, label
+
+    def __len__(self):
+        return self.vnr['data'].shape[0]
+
+    @property
+    def num_channels(self):
+        return 3, 4
+
+    @property
+    def labels(self):
+        # e.g. [0, 1, 2]
+        return list(range(len(self.class_list)))
+
+    @property
+    def names(self):
+        return self.class_list

@@ -4,7 +4,7 @@ import datas.transforms as transforms
 from torch.utils.data import DataLoader
 
 from configs import CFG
-from datas.raw_dataset import RawSARMSI
+from datas.raw_dataset import RawSARMSI, RawVNRMSI
 
 
 def build_transform():
@@ -15,8 +15,16 @@ def build_transform():
             transforms.LabelRenumber(class_interest),
             transforms.ToTensorPreData(),
             transforms.NormalizePreData(
-                means=[CFG.DATASET.SEN1.MEANS,CFG.DATASET.SEN2.MEANS],
-                stds=[CFG.DATASET.SEN1.STDS, CFG.DATASET.SEN2.STDS]
+                means=[CFG.DATASET.DATA1.MEANS,CFG.DATASET.DATA2.MEANS],
+                stds=[CFG.DATASET.DATA1.STDS, CFG.DATASET.DATA2.STDS]
+            )
+        ])
+    elif CFG.DATASET.NAME == 'RAW_VNR_MSI':
+        transform = transforms.Compose([
+            transforms.ToTensorPreData(),
+            transforms.NormalizePreData(
+                means=[CFG.DATASET.DATA1.MEANS, CFG.DATASET.DATA2.MEANS],
+                stds=[CFG.DATASET.DATA1.STDS, CFG.DATASET.DATA2.STDS]
             )
         ])
     else:
@@ -25,9 +33,11 @@ def build_transform():
 
 
 def build_dataset(split: str):
-    assert split in ['train', 'val', 'test']
+    # assert split in ['train', 'val', 'test']
     if CFG.DATASET.NAME == 'RAW_SAR_MSI':
         dataset = RawSARMSI(CFG.DATASET.ROOT, split, transform=build_transform())
+    elif CFG.DATASET.NAME == 'RAW_VNR_MSI':
+        dataset = RawVNRMSI(CFG.DATASET.ROOT, split, transform=build_transform())
     else:
         raise NotImplementedError('invalid dataset: {} for cropping'.format(CFG.DATASET.NAME))
     return dataset

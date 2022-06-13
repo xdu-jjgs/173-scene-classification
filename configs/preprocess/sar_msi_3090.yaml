@@ -1,7 +1,7 @@
 DATASET:
     NAME: 'RAW_SAR_MSI'
     ROOT: 'E:/dataset/SAR-MSI_dataset/So2Sat_LCZ42'
-    SEN1:
+    DATA1:
         MEANS:
             - 0
             - 0
@@ -20,7 +20,7 @@ DATASET:
             - 10.4905
             - 1.2942
             - 0.6086
-    SEN2:
+    DATA2:
         MEANS:
             - 0.1237
             - 0.1093

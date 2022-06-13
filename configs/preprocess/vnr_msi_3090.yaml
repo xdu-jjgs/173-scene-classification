@@ -1,0 +1,26 @@
+DATASET:
+    NAME: 'RAW_VNR_MSI'
+    ROOT: 'E:/zzy/173/data/vnr-gf'
+#    TODO: Measure
+    DATA1:
+        MEANS:
+            - 0.0
+            - 0.0
+            - 0.0
+            - 0.0
+        STDS:
+            - 1.0
+            - 1.0
+            - 1.0
+            - 1.0
+    DATA2:
+        MEANS:
+            - 0.0
+            - 0.0
+            - 0.0
+            - 0.0
+        STDS:
+            - 1.0
+            - 1.0
+            - 1.0
+            - 1.0

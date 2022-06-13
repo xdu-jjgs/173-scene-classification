@@ -98,12 +98,13 @@ class LabelFilter(nn.Module):
 
 
 class LabelRenumber(nn.Module):
-    def __init__(self, class_interest):
+    def __init__(self, class_interest, start:int=0):
         super(LabelRenumber, self).__init__()
         self.class_interest = class_interest
+        self.start = start
 
     def forward(self, image, label):
-        label = self.class_interest.index(label)
+        label = self.class_interest.index(label) + self.start
         return image, label
 
 
