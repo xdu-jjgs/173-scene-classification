@@ -48,8 +48,8 @@ def main():
                 count += 1
                 # print(data[0].shape, data[1].shape, label)
                 data = {
-                    'sen1': data[0],
-                    'sen2': data[1],
+                    'data1': data[0],
+                    'data2': data[1],
                     'label': label
                 }
 

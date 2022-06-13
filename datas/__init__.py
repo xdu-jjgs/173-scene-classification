@@ -20,10 +20,10 @@ def build_transform():
             )
         ])
     elif CFG.DATASET.NAME == 'RAW_VNR_MSI':
+        # 用tensor+float格式存储比numpy+uint多出十几倍大小
         transform = transforms.Compose([
-            transforms.LabelRenumber(range(len(7))),
-            transforms.ToTensorPreData(),
-            transforms.NormalizePreData(
+            transforms.ToTensorPreSubData(),
+            transforms.NormalizePreSubData(
                 means=[CFG.DATASET.DATA1.MEANS, CFG.DATASET.DATA2.MEANS],
                 stds=[CFG.DATASET.DATA1.STDS, CFG.DATASET.DATA2.STDS]
             )

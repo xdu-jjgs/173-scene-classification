@@ -2,6 +2,8 @@ import os
 import pickle
 import argparse
 
+import numpy as np
+
 from configs import CFG
 from datetime import datetime
 
@@ -18,11 +20,17 @@ def parse_args():
                         default=os.path.join('runs', datetime.now().strftime('%Y%m%d-%H%M%S-test')),
                         help='path for experiment output files')
     parser.add_argument('--train-val-test-portion',
-                        type=list,
-                        help='class names')
+                        type=float,
+                        nargs='+',
+                        help='train, val, test portions')
     parser.add_argument('--class-list',
-                        type=list,
+                        type=str,
+                        nargs='+',
                         help='class names')
+    parser.add_argument('--seed',
+                        type=int,
+                        default=12,
+                        help='random seed')
     args = parser.parse_args()
     return args
 
@@ -36,20 +44,20 @@ def main():
     # merge config with config file
     CFG.merge_from_file(args.config)
 
+    # set random seed
+    np.random.seed(args.seed)
+
+    portion = args.train_val_test_portion
+    assert abs(sum(portion) - 1.0) < 1e-5
+
     splits = args.class_list
     train_datasets = []
     val_datasets = []
     test_datasets = []
     # TODO: add tqdm
     for split in splits:
-        save_path = os.path.join(args.path, split)
-        if not os.path.exists(save_path):
-            os.makedirs(save_path, exist_ok=True)
-
         dataset = build_dataset(split)
         amount = len(dataset)
-        portion = args.train_val_test_portion
-        assert abs(sum(portion) - 1.0) < 1e-5
         train_dataset = dataset[:int(amount * portion[0])]
         val_dataset = dataset[int(amount * portion[0]): int(amount * portion[0]) + int(amount * portion[1])]
         test_dataset = dataset[int(amount * portion[0]) + int(amount * portion[1]):]
@@ -65,15 +73,21 @@ def main():
         if not os.path.exists(save_path):
             os.makedirs(save_path, exist_ok=True)
 
-        for index, sample in enumerate(dataset):
-            data, label = sample
-            data = {
-                'sen1': data[0],
-                'sen2': data[1],
-                'label': label
-            }
-            fw = open(os.path.join(save_path, '{}_{}.pkl'.format(index, label)), 'wb')
-            pickle.dump(data, fw)
+        samples = []
+        for dataset_class in dataset:
+            data, label = dataset_class
+            vnrs, gfs = data
+            for vnr, gf in zip(vnrs, gfs):
+                data = {
+                    'data1': vnr,
+                    'data2': gf,
+                    'label': label
+                }
+                samples.append(data)
+        np.random.shuffle(samples)
+        for index, sample in enumerate(samples):
+            fw = open(os.path.join(save_path, '{}_{}.pkl'.format(index, sample['label'])), 'wb')
+            pickle.dump(sample, fw)
             fw.close()
 
 

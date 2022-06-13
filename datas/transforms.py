@@ -58,8 +58,16 @@ class ToTensorPreData(nn.Module):
         self.to_tensor = transforms.ToTensor()
 
     def forward(self, image, label):
-        if image is not None:
-            image = [self.to_tensor(sen) for sen in image]
+        image = [self.to_tensor(data) for data in image]
+        return image, label
+
+
+class ToTensorPreSubData(nn.Module):
+    def __init__(self):
+        super(ToTensorPreSubData, self).__init__()
+
+    def forward(self, image, label):
+        image = [torch.tensor(data, dtype=torch.float) for data in image]
         return image, label
 
 
@@ -81,7 +89,18 @@ class NormalizePreData(nn.Module):
         self.normalizes = [transforms.Normalize(mean, std) for mean, std in zip(self.means, self.stds)]
 
     def forward(self, image, label):
-        image = [normalize(sen) for sen, normalize in zip(image, self.normalizes)]
+        image = [normalize(data) for data, normalize in zip(image, self.normalizes)]
+        return image, label
+
+
+class NormalizePreSubData(nn.Module):
+    def __init__(self, means, stds):
+        super(NormalizePreSubData, self).__init__()
+        self.means = means
+        self.stds = stds
+
+    def forward(self, image, label):
+        image = [(data - torch.tensor(mean)) / torch.tensor(std) for data, mean, std in zip(image, self.means, self.stds)]
         return image, label
 
 
@@ -98,7 +117,7 @@ class LabelFilter(nn.Module):
 
 
 class LabelRenumber(nn.Module):
-    def __init__(self, class_interest, start:int=0):
+    def __init__(self, class_interest, start: int = 0):
         super(LabelRenumber, self).__init__()
         self.class_interest = class_interest
         self.start = start

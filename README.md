@@ -62,3 +62,12 @@ python preprocess_by_dataset.py configs/preprocess/sar_msi_3090.yaml ^
 --path E:/zts/dataset/SAR_MSI_preprocessed
 ```
 ### VNR_MSI数据集
+包括：
+1. 转为Tensor
+2. Z-Score归一化
+```shell
+python preprocess_by_class.py configs/preprocess/vnr_msi_3090.yaml ^
+--path E:/zts/dataset/VNR_MSI_preprocessed ^
+--train-val-test-portion 0.6 0.1 0.3 ^
+--class-list building cross factory farmland highway lake river
+```
