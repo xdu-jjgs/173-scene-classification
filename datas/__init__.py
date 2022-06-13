@@ -21,6 +21,7 @@ def build_transform():
         ])
     elif CFG.DATASET.NAME == 'RAW_VNR_MSI':
         transform = transforms.Compose([
+            transforms.LabelRenumber(range(len(7))),
             transforms.ToTensorPreData(),
             transforms.NormalizePreData(
                 means=[CFG.DATASET.DATA1.MEANS, CFG.DATASET.DATA2.MEANS],
