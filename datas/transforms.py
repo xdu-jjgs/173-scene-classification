@@ -132,5 +132,6 @@ class DataConcat(nn.Module):
         super(DataConcat, self).__init__()
 
     def forward(self, image, label):
-        image = torch.concat(image, dim=2)
+        # C*H*W
+        image = torch.concat(image, dim=0)
         return image, label

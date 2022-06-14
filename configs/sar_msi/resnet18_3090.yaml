@@ -1,5 +1,5 @@
 DATASET:
-    NAME: 'RAW_SAR_MSI'
+    NAME: 'PREPROCESSED_SAR_MSI'
     ROOT: 'E:/zts/dataset/SAR_MSI_preprocessed'
     FUSION: 'concat'
 

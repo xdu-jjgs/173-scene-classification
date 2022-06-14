@@ -29,7 +29,7 @@ def build_transform():
                 stds=[CFG.DATASET.DATA1.STDS, CFG.DATASET.DATA2.STDS]
             )
         ])
-    elif CFG.DATASET.NAME == 'Preprocessed_SAR_MSI':
+    elif CFG.DATASET.NAME == 'PREPROCESSED_SAR_MSI':
         if CFG.DATASET.FUSION == 'concat':
             transform = transforms.Compose([
                 transforms.DataConcat()
@@ -47,7 +47,7 @@ def build_dataset(split: str):
         dataset = RawSARMSI(CFG.DATASET.ROOT, split, transform=build_transform())
     elif CFG.DATASET.NAME == 'RAW_VNR_MSI':
         dataset = RawVNRMSI(CFG.DATASET.ROOT, split, transform=build_transform())
-    elif CFG.DATASET.NAME == 'Preprocessed_SAR_MSI':
+    elif CFG.DATASET.NAME == 'PREPROCESSED_SAR_MSI':
         dataset = PreprocessedSARMSI(CFG.DATASET.ROOT, split, transform=build_transform())
     else:
         raise NotImplementedError('invalid dataset: {} for cropping'.format(CFG.DATASET.NAME))

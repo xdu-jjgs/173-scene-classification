@@ -30,7 +30,8 @@ class PreprocessedSARMSI(Dataset):
 
     @property
     def num_channels(self):
-        return self.__getitem__(0)[0].size()[-1]
+        sens = self.__getitem__(0)[0]
+        return sens.size()[0]
 
     @property
     def labels(self):

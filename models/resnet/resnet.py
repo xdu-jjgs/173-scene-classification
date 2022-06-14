@@ -10,15 +10,14 @@ class ResNet(nn.Module):
                  replace_stride_with_dilation=None):
         super(ResNet, self).__init__()
         self.model_name = 'resnet{}'.format(depth)
-        model = getattr(models, self.model_name)(num_classes=num_classes,
-                                                 replace_stride_with_dilation=replace_stride_with_dilation)
+        model = getattr(models, self.model_name)(replace_stride_with_dilation=replace_stride_with_dilation)
         depth2channels = {
             18: 512,
             34: 512,
             50: 2048,
             101: 2048,
         }
-        self.out_channels = depth2channels[depth]
+        out_channels = depth2channels[depth]
 
         if pretrained:
             model = load_pretrained_models(model, self.model_name)
@@ -34,7 +33,7 @@ class ResNet(nn.Module):
         self.layer3 = model.layer3
         self.layer4 = model.layer4
         self.avgpool = model.avgpool
-        self.fc = model.fc
+        self.fc = nn.Linear(out_channels, num_classes)
 
     def forward(self, x):
         x = self.layer0(x)

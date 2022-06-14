@@ -218,12 +218,12 @@ def worker(rank_gpu, args):
 
             train_bar.set_postfix({
                 'epoch': epoch,
-                'loss': f'{loss.item():.4f}',
-                'P': ','.join([f'{p:.4f}' for p in metric.Ps()]),
-                'R': ','.join([f'{r:.4f}' for r in metric.Rs()]),
-                'F1s': ','.join([f'{f:.4f}' for f in metric.F1s()]),
-                'mP': f'{metric.mPA():.4f}',
-                'pa': f'{metric.PA():.4f}'
+                'loss': f'{loss.item():.3f}',
+                # 'P': ','.join([f'{p:.4f}' for p in metric.Ps()]),
+                # 'R': ','.join([f'{r:.4f}' for r in metric.Rs()]),
+                # 'F1s': ','.join([f'{f:.4f}' for f in metric.F1s()]),
+                'mP': f'{metric.mPA():.3f}',
+                'pa': f'{metric.PA():.3f}'
             })
 
         train_loss /= len(train_dataloader)
@@ -258,12 +258,12 @@ def worker(rank_gpu, args):
 
                 val_bar.set_postfix({
                     'epoch': epoch,
-                    'loss': f'{loss.item():.4f}',
-                    'P': ','.join([f'{p:.4f}' for p in metric.Ps()]),
-                    'R': ','.join([f'{r:.4f}' for r in metric.Rs()]),
-                    'F1s': ','.join([f'{f:.4f}' for f in metric.F1s()]),
-                    'mP': f'{metric.mPA():.4f}',
-                    'pa': f'{metric.PA():.4f}'
+                    'loss': f'{loss.item():.3f}',
+                    # 'P': ','.join([f'{p:.4f}' for p in metric.Ps()]),
+                    # 'R': ','.join([f'{r:.4f}' for r in metric.Rs()]),
+                    # 'F1s': ','.join([f'{f:.4f}' for f in metric.F1s()]),
+                    'mP': f'{metric.mPA():.3f}',
+                    'pa': f'{metric.PA():.3f}'
                 })
 
         val_loss /= len(val_dataloader)

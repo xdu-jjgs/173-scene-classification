@@ -9,7 +9,7 @@ python train.py configs/sar_msi/resnet18_3090.yaml ^
 --path ./runs/sar_msi/resnet18-train ^
 --no-validate ^
 --nodes 1 ^
---gpus 1 ^
+--gpus 2 ^
 --rank-node 0 ^
 --backend gloo ^
 --master-ip localhost ^
