@@ -1,6 +1,6 @@
 DATASET:
     NAME: 'RAW_SAR_MSI'
-    ROOT: 'E:/dataset/SAR-MSI_dataset/So2Sat_LCZ42'
+    ROOT: 'E:/zts/dataset/SAR_MSI_preprocessed'
     FUSION: 'concat'
 
 DATALOADER:
@@ -8,7 +8,7 @@ DATALOADER:
     NUM_WORKERS: 8
 
 MODEL:
-    NAME: 'resnet'
+    NAME: 'resnet18'
 
 CRITERION:
     NAME: 'softmax+ce'
