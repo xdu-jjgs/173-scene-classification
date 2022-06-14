@@ -71,3 +71,4 @@ python preprocess_by_class.py configs/preprocess/vnr_msi_3090.yaml ^
 --train-val-test-portion 0.6 0.1 0.3 ^
 --class-list building cross factory farmland highway lake river
 ```
+## <a name='preprocess'> </a>模型训练

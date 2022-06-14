@@ -38,7 +38,6 @@ def parse_args():
     parser.add_argument('--no-validate',
                         action='store_true',
                         help='whether not to validate in the training process')
-
     parser.add_argument('-n',
                         '--nodes',
                         type=int,
@@ -158,7 +157,7 @@ def worker(rank_gpu, args):
     epoch = 0
     iteration = 0
     best_epoch = 0
-    best_pa = 0.
+    best_PA = 0.
 
     # load checkpoint if specified
     if args.checkpoint is not None:
@@ -169,15 +168,16 @@ def worker(rank_gpu, args):
         optimizer.load_state_dict(checkpoint['optimizer']['state_dict'])
         epoch = checkpoint['optimizer']['epoch']
         iteration = checkpoint['optimizer']['iteration']
-        best_pa = checkpoint['metric']['pa']
+        best_PA = checkpoint['metric']['PA']
         best_epoch = checkpoint['optimizer']['best_epoch']
-        logging.info('load checkpoint {} with mIoU={:.4f}, epoch={}'.format(args.checkpoint, best_pa, epoch))
+        logging.info('load checkpoint {} with PA={:.4f}, epoch={}'.format(args.checkpoint, best_PA, epoch))
 
     # train - validation loop
 
     while True:
         epoch += 1
         if epoch > CFG.EPOCHS:
+            logging.info("Best epoch:{}, PA:{:.3f}".format(best_epoch, best_PA))
             if dist.get_rank() == 0:
                 writer.close()
             return
@@ -219,24 +219,21 @@ def worker(rank_gpu, args):
             train_bar.set_postfix({
                 'epoch': epoch,
                 'loss': f'{loss.item():.3f}',
-                # 'P': ','.join([f'{p:.4f}' for p in metric.Ps()]),
-                # 'R': ','.join([f'{r:.4f}' for r in metric.Rs()]),
-                # 'F1s': ','.join([f'{f:.4f}' for f in metric.F1s()]),
                 'mP': f'{metric.mPA():.3f}',
-                'pa': f'{metric.PA():.3f}'
+                'PA': f'{metric.PA():.3f}'
             })
 
         train_loss /= len(train_dataloader)
-        pa, mpa, ps, rs, f1s = metric.PA(), metric.mPA(), metric.Ps(), metric.Rs(), metric.F1s()
+        PA, mPA, Ps, Rs, F1S = metric.PA(), metric.mPA(), metric.Ps(), metric.Rs(), metric.F1s()
         if dist.get_rank() == 0:
             writer.add_scalar('train/loss-epoch', train_loss, epoch)
-            writer.add_scalar('train/PA-epoch', pa, epoch)
-            writer.add_scalar('train/mPA-epoch', mpa, epoch)
+            writer.add_scalar('train/PA-epoch', PA, epoch)
+            writer.add_scalar('train/mPA-epoch', mPA, epoch)
         logging.info(
-            'train epoch={} | loss={:.3f} PA={:.3f} mPA={:.3f}'.format(epoch, train_loss, pa, mpa))
+            'train epoch={} | loss={:.3f} PA={:.3f} mPA={:.3f}'.format(epoch, train_loss, PA, mPA))
         for c in range(NUM_CLASSES):
             logging.info(
-                'train epoch={} | class=#{} P={:.3f} R={:.3f} F1={:.3f}'.format(epoch, c, ps[c], rs[c], f1s[c]))
+                'train epoch={} | class=#{} P={:.3f} R={:.3f} F1={:.3f}'.format(epoch, c, Ps[c], Rs[c], F1S[c]))
 
         # validate
         if args.no_validate:
@@ -259,26 +256,23 @@ def worker(rank_gpu, args):
                 val_bar.set_postfix({
                     'epoch': epoch,
                     'loss': f'{loss.item():.3f}',
-                    # 'P': ','.join([f'{p:.4f}' for p in metric.Ps()]),
-                    # 'R': ','.join([f'{r:.4f}' for r in metric.Rs()]),
-                    # 'F1s': ','.join([f'{f:.4f}' for f in metric.F1s()]),
                     'mP': f'{metric.mPA():.3f}',
-                    'pa': f'{metric.PA():.3f}'
+                    'PA': f'{metric.PA():.3f}'
                 })
 
         val_loss /= len(val_dataloader)
 
-        pa, mpa, ps, rs, f1s = metric.PA(), metric.mPA(), metric.Ps(), metric.Rs(), metric.F1s()
+        PA, mPA, Ps, Rs, F1S = metric.PA(), metric.mPA(), metric.Ps(), metric.Rs(), metric.F1s()
         if dist.get_rank() == 0:
             writer.add_scalar('val/loss-epoch', val_loss, epoch)
-            writer.add_scalar('val/PA-epoch', pa, epoch)
-            writer.add_scalar('val/mPA-epoch', mpa, epoch)
-        if pa > best_pa:
+            writer.add_scalar('val/PA-epoch', PA, epoch)
+            writer.add_scalar('val/mPA-epoch', mPA, epoch)
+        if PA > best_PA:
             best_epoch = epoch
 
-        logging.info('val epoch={} | loss={:.3f} PA={:.3f} mPA={:.3f}'.format(epoch, train_loss, pa, mpa))
+        logging.info('val epoch={} | loss={:.3f} PA={:.3f} mPA={:.3f}'.format(epoch, train_loss, PA, mPA))
         for c in range(NUM_CLASSES):
-            logging.info('val epoch={} |  class=#{} P={:.3f} R={:.3f} F1={:.3f}'.format(epoch, c, ps[c], rs[c], f1s[c]))
+            logging.info('val epoch={} |  class=#{} P={:.3f} R={:.3f} F1={:.3f}'.format(epoch, c, Ps[c], Rs[c], F1S[c]))
 
         # adjust learning rate if specified
         if scheduler is not None:
@@ -300,19 +294,17 @@ def worker(rank_gpu, args):
                     'iteration': iteration
                 },
                 'metric': {
-                    'PA': pa,
-                    'mPA': mpa,
-                    'Ps': ps,
-                    'Rs': rs,
-                    'F1s': f1s
+                    'PA': PA,
+                    'mPA': mPA,
+                    'Ps': Ps,
+                    'Rs': Rs,
+                    'F1S': F1S
                 },
             }
             torch.save(checkpoint, os.path.join(args.path, 'last.pth'))
-            if pa > best_pa:
-                best_pa = pa
+            if PA > best_PA:
+                best_PA = PA
                 torch.save(checkpoint, os.path.join(args.path, 'best.pth'))
-
-    logging.info("Best epoch:{}".format(best_epoch))
 
 
 def main():

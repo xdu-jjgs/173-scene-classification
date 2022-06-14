@@ -2,9 +2,11 @@ import os
 import torch
 import logging
 import argparse
+import torch.distributed as dist
 
 from tqdm import tqdm
 from datetime import datetime
+from torch.nn.parallel import DistributedDataParallel
 
 from configs import CFG
 from metric import Metric
@@ -69,9 +71,10 @@ def main():
     if not os.path.isfile(args.checkpoint):
         raise RuntimeError('checkpoint {} not found'.format(args.checkpoint))
     checkpoint = torch.load(args.checkpoint)
-    model.load_state_dict(checkpoint['model']['state_dict'])
-    best_pa = checkpoint['metric']['pa']
-    logging.info('load checkpoint {} with pa={:.3f}'.format(args.checkpoint, best_pa))
+    # delete module saved in train
+    model.load_state_dict(({k.replace('module.', ''): v for k, v in checkpoint['model']['state_dict'].items()}))
+    best_PA = checkpoint['metric']['PA']
+    logging.info('load checkpoint {} with PA={:.3f}'.format(args.checkpoint, best_PA))
 
     # test
     model.eval()  # set model to evaluation mode
@@ -79,7 +82,8 @@ def main():
     test_bar = tqdm(test_dataloader, desc='testing', ascii=True)
     with torch.no_grad():  # disable gradient back-propagation
         for batch, (x, label) in enumerate(test_bar):
-            x, label = x.to(args.device), label.to(args.device)
+            # change DoubleTensor x to FloatTensor
+            x, label = x.float().to(args.device), label.to(args.device)
             y = model(x)
 
             if NUM_CLASSES > 2:
@@ -88,10 +92,10 @@ def main():
                 pred = (y.data.cpu().numpy() > 0.5).squeeze(1)
             label = label.data.cpu().numpy()
             metric.add(pred, label)
-    pa, mpa, ps, rs, f1s = metric.PA(), metric.mPA(), metric.Ps(), metric.Rs(), metric.F1s()
-    logging.info('test | PA={:.3f} mPA={:.3f}'.format(pa, mpa))
+    PA, mPA, Ps, Rs, F1S = metric.PA(), metric.mPA(), metric.Ps(), metric.Rs(), metric.F1s()
+    logging.info('test | PA={:.3f} mPA={:.3f}'.format(PA, mPA))
     for c in range(NUM_CLASSES):
-        logging.info('test | class=#{} P={:.3f} R={:.3f} F1={:.3f}'.format(c, ps[c], rs[c], f1s[c]))
+        logging.info('test | class=#{} P={:.3f} R={:.3f} F1={:.3f}'.format(c, Ps[c], Rs[c], F1S[c]))
 
 
 if __name__ == '__main__':
