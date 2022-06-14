@@ -1,8 +1,12 @@
+apex
 h5py
-yacs
 numpy
-torch
-torchfile
 scipy
 sklearn
 scikit-learn
+tensorboardX
+torch
+torchfile
+torchvision
+tqdm
+yacs

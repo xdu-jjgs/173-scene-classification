@@ -127,10 +127,10 @@ class LabelRenumber(nn.Module):
         return image, label
 
 
-class ChannelConcat(nn.Module):
+class DataConcat(nn.Module):
     def __init__(self):
-        super(ChannelConcat, self).__init__()
+        super(DataConcat, self).__init__()
 
     def forward(self, image, label):
-        image = np.concatenate(image, axis=2)
+        image = torch.concat(image, dim=2)
         return image, label

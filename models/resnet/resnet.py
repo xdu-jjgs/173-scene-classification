@@ -1,3 +1,4 @@
+import torch
 import torch.nn as nn
 import torchvision.models as models
 
@@ -5,10 +6,12 @@ from models.utils.download import load_pretrained_models
 
 
 class ResNet(nn.Module):
-    def __init__(self, depth, in_channels, pretrained=True, replace_stride_with_dilation=None):
+    def __init__(self, in_channels: int, num_classes: int, depth: int, pretrained=True,
+                 replace_stride_with_dilation=None):
         super(ResNet, self).__init__()
         self.model_name = 'resnet{}'.format(depth)
-        model = getattr(models, self.model_name)(replace_stride_with_dilation=replace_stride_with_dilation)
+        model = getattr(models, self.model_name)(num_classes=num_classes,
+                                                 replace_stride_with_dilation=replace_stride_with_dilation)
         depth2channels = {
             18: 512,
             34: 512,
@@ -30,12 +33,16 @@ class ResNet(nn.Module):
         self.layer2 = model.layer2
         self.layer3 = model.layer3
         self.layer4 = model.layer4
+        self.avgpool = model.avgpool
+        self.fc = model.fc
 
     def forward(self, x):
-        x1 = self.layer0(x)
-        x2 = self.layer1(x1)
-        x3 = self.layer2(x2)
-        x4 = self.layer3(x3)
-        x5 = self.layer4(x4)
-        return x1, x2, x3, x4, x5
-
+        x = self.layer0(x)
+        x = self.layer1(x)
+        x = self.layer2(x)
+        x = self.layer3(x)
+        x = self.layer4(x)
+        x = self.avgpool(x)
+        x = torch.flatten(x, 1)
+        x = self.fc(x)
+        return x
