@@ -58,7 +58,7 @@ TODO
 3. 转为Tensor
 4. Z-Score归一化
 ```shell
-python preprocess_by_dataset.py configs/preprocess/sar_msi_3090.yaml ^
+python preprocess_by_dataset.py configs/preprocess/sar_msi_2000.yaml ^
       --path E:/zts/dataset/SAR_MSI_preprocessed
 ```
 ### VNR_MSI数据集
@@ -69,7 +69,7 @@ python preprocess_by_dataset.py configs/preprocess/sar_msi_3090.yaml ^
 2. Z-Score归一化
 
 ```shell
-python preprocess_by_class.py configs/preprocess/vnr_msi_3090.yaml ^
+python preprocess_by_class.py configs/preprocess/vnr_msi.yaml ^
         --path E:/zts/dataset/VNR_MSI_preprocessed ^
         --train-val-test-portion 0.6 0.1 0.3 ^
         --class-list building cross factory farmland highway lake river
@@ -78,7 +78,7 @@ python preprocess_by_class.py configs/preprocess/vnr_msi_3090.yaml ^
 ## <a name='train'> </a>模型训练
 
 ```shell
-python train.py configs/sar_msi/resnet18_3090.yaml ^
+python train.py configs/sar_msi/resnet18.yaml ^
         --path ./runs/sar_msi/resnet18-train ^
         --nodes 1 ^
         --gpus 2 ^
@@ -103,9 +103,9 @@ python test.py runs/sar_msi/resnet18-train/config.yaml ^
 
 | Dataset | Model                                          | OA    |
 |---------|------------------------------------------------|-------|
-| SAR_MSI | [ResNet18](configs/sar_msi/resnet18_3090.yaml) | 0.818 |
-| SAR_MSI | [ResNet34](configs/sar_msi/resnet34_3090.yaml) | 0.847 |
-| VNR_MSI | [ResNet34](configs/vnr_msi/resnet34_3090.yaml) | 0.783 |
+| SAR_MSI | [ResNet18](configs/sar_msi/resnet18.yaml) | 0.915 |
+| SAR_MSI | [ResNet34](configs/sar_msi/resnet34.yaml) | 0.898 |
+| VNR_MSI | [ResNet34](configs/vnr_msi/resnet34.yaml) | 0.868 |
 
 ## <a name="license"></a> License
 

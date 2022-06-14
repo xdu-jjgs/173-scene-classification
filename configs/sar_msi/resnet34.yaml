@@ -4,11 +4,11 @@ DATASET:
     FUSION: 'concat'
 
 DATALOADER:
-    BATCH_SIZE: 8
+    BATCH_SIZE: 32
     NUM_WORKERS: 8
 
 MODEL:
-    NAME: 'resnet18'
+    NAME: 'resnet34'
 
 CRITERION:
     NAME: 'softmax+ce'

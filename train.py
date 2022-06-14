@@ -230,11 +230,13 @@ def worker(rank_gpu, args):
             writer.add_scalar('train/PA-epoch', PA, epoch)
             writer.add_scalar('train/mPA-epoch', mPA, epoch)
         logging.info(
-            'train epoch={} | loss={:.3f} PA={:.3f} mPA={:.3f}'.format(epoch, train_loss, PA, mPA))
+            'rank{} train epoch={} | loss={:.3f} PA={:.3f} mPA={:.3f}'.format(dist.get_rank(), epoch, train_loss, PA,
+                                                                              mPA))
         for c in range(NUM_CLASSES):
             logging.info(
-                'train epoch={} | class={}-{} P={:.3f} R={:.3f} F1={:.3f}'.format(epoch, c, train_dataset.names[c],
-                                                                                  Ps[c], Rs[c], F1S[c]))
+                'rank{} train epoch={} | class={}-{} P={:.3f} R={:.3f} F1={:.3f}'.format(dist.get_rank(), epoch, c,
+                                                                                         train_dataset.names[c],
+                                                                                         Ps[c], Rs[c], F1S[c]))
 
         # validate
         if args.no_validate:
@@ -271,11 +273,14 @@ def worker(rank_gpu, args):
         if PA > best_PA:
             best_epoch = epoch
 
-        logging.info('val epoch={} | loss={:.3f} PA={:.3f} mPA={:.3f}'.format(epoch, train_loss, PA, mPA))
+        logging.info(
+            'rank{} val epoch={} | loss={:.3f} PA={:.3f} mPA={:.3f}'.format(dist.get_rank(), epoch, train_loss, PA,
+                                                                            mPA))
         for c in range(NUM_CLASSES):
             logging.info(
-                'val epoch={} |  class={}-{} P={:.3f} R={:.3f} F1={:.3f}'.format(epoch, c, val_dataset.names[c], Ps[c],
-                                                                                 Rs[c], F1S[c]))
+                'rank{} val epoch={} |  class={}-{} P={:.3f} R={:.3f} F1={:.3f}'.format(dist.get_rank(), epoch, c,
+                                                                                        val_dataset.names[c], Ps[c],
+                                                                                        Rs[c], F1S[c]))
 
         # adjust learning rate if specified
         if scheduler is not None:

@@ -1,10 +1,10 @@
 DATASET:
-    NAME: 'PREPROCESSED_SAR_MSI'
-    ROOT: 'E:/zts/dataset/SAR_MSI_preprocessed'
+    NAME: 'PREPROCESSED_VNR_MSI'
+    ROOT: 'E:/zts/dataset/VNR_MSI_preprocessed'
     FUSION: 'concat'
 
 DATALOADER:
-    BATCH_SIZE: 8
+    BATCH_SIZE: 16
     NUM_WORKERS: 8
 
 MODEL:
