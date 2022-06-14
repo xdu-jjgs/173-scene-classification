@@ -5,7 +5,7 @@ from torch.utils.data import DataLoader
 
 from configs import CFG
 from datas.raw_dataset import RawSARMSI, RawVNRMSI
-from datas.preprocessed_dataset import PreprocessedSARMSI
+from datas.preprocessed_dataset import PreprocessedSARMSI, PreprocessedVNRMSI
 
 
 def build_transform():
@@ -29,7 +29,7 @@ def build_transform():
                 stds=[CFG.DATASET.DATA1.STDS, CFG.DATASET.DATA2.STDS]
             )
         ])
-    elif CFG.DATASET.NAME == 'PREPROCESSED_SAR_MSI':
+    elif CFG.DATASET.NAME in ['PREPROCESSED_SAR_MSI', 'PREPROCESSED_VNR_MSI']:
         if CFG.DATASET.FUSION == 'concat':
             transform = transforms.Compose([
                 transforms.DataConcat()
@@ -49,6 +49,8 @@ def build_dataset(split: str):
         dataset = RawVNRMSI(CFG.DATASET.ROOT, split, transform=build_transform())
     elif CFG.DATASET.NAME == 'PREPROCESSED_SAR_MSI':
         dataset = PreprocessedSARMSI(CFG.DATASET.ROOT, split, transform=build_transform())
+    elif CFG.DATASET.NAME == 'PREPROCESSED_VNR_MSI':
+        dataset = PreprocessedVNRMSI(CFG.DATASET.ROOT, split, transform=build_transform())
     else:
         raise NotImplementedError('invalid dataset: {} for cropping'.format(CFG.DATASET.NAME))
     return dataset

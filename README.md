@@ -62,13 +62,49 @@ python preprocess_by_dataset.py configs/preprocess/sar_msi_3090.yaml ^
 --path E:/zts/dataset/SAR_MSI_preprocessed
 ```
 ### VNR_MSI数据集
+
 包括：
+
 1. 转为Tensor
 2. Z-Score归一化
+
 ```shell
 python preprocess_by_class.py configs/preprocess/vnr_msi_3090.yaml ^
 --path E:/zts/dataset/VNR_MSI_preprocessed ^
 --train-val-test-portion 0.6 0.1 0.3 ^
 --class-list building cross factory farmland highway lake river
 ```
-## <a name='preprocess'> </a>模型训练
+
+## <a name='train'> </a>模型训练
+
+```shell
+python train.py configs/sar_msi/resnet18_3090.yaml ^
+        --path ./runs/sar_msi/resnet18-train ^
+        --nodes 1 ^
+        --gpus 2 ^
+        --rank-node 0 ^
+        --backend gloo ^
+        --master-ip localhost ^
+        --master-port 8888 ^
+        --seed 30 ^
+        --opt-level O0
+```
+
+## <a name='test'> </a>模型测试
+
+```shell
+python test.py runs/sar_msi/resnet18-train/config.yaml ^
+        runs/sar_msi/resnet18-train/best.pth ^
+        --path runs/sar_msi/resnet18-test ^
+        --device cuda:0
+```
+
+## <a name='result'> </a>结果
+
+| Dataset | Model                                          | OA    |
+|---------|------------------------------------------------|-------|
+| SAR_MSI | [ResNet18](configs/sar_msi/resnet18_3090.yaml) | 0.818 |
+
+## <a name="license"></a> License
+
+This project is released under the [MIT license](LICENSE).
