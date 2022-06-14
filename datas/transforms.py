@@ -68,6 +68,7 @@ class ToTensorPreSubData(nn.Module):
 
     def forward(self, image, label):
         image = [torch.tensor(data, dtype=torch.float) for data in image]
+        image = [torch.permute(data, (0, 3, 1, 2)) for data in image]
         return image, label
 
 
@@ -100,7 +101,8 @@ class NormalizePreSubData(nn.Module):
         self.stds = stds
 
     def forward(self, image, label):
-        image = [(data - torch.tensor(mean)) / torch.tensor(std) for data, mean, std in zip(image, self.means, self.stds)]
+        image = [(data - torch.tensor(mean)) / torch.tensor(std) for data, mean, std in
+                 zip(image, self.means, self.stds)]
         return image, label
 
 

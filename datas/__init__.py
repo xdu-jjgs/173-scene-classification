@@ -24,7 +24,7 @@ def build_transform():
         # 用tensor+float格式存储比numpy+uint多出十几倍大小
         transform = transforms.Compose([
             transforms.ToTensorPreSubData(),
-            transforms.NormalizePreSubData(
+            transforms.NormalizePreData(
                 means=[CFG.DATASET.DATA1.MEANS, CFG.DATASET.DATA2.MEANS],
                 stds=[CFG.DATASET.DATA1.STDS, CFG.DATASET.DATA2.STDS]
             )

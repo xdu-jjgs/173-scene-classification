@@ -59,7 +59,7 @@ TODO
 4. Z-Score归一化
 ```shell
 python preprocess_by_dataset.py configs/preprocess/sar_msi_3090.yaml ^
---path E:/zts/dataset/SAR_MSI_preprocessed
+      --path E:/zts/dataset/SAR_MSI_preprocessed
 ```
 ### VNR_MSI数据集
 
@@ -70,9 +70,9 @@ python preprocess_by_dataset.py configs/preprocess/sar_msi_3090.yaml ^
 
 ```shell
 python preprocess_by_class.py configs/preprocess/vnr_msi_3090.yaml ^
---path E:/zts/dataset/VNR_MSI_preprocessed ^
---train-val-test-portion 0.6 0.1 0.3 ^
---class-list building cross factory farmland highway lake river
+        --path E:/zts/dataset/VNR_MSI_preprocessed ^
+        --train-val-test-portion 0.6 0.1 0.3 ^
+        --class-list building cross factory farmland highway lake river
 ```
 
 ## <a name='train'> </a>模型训练
@@ -104,6 +104,7 @@ python test.py runs/sar_msi/resnet18-train/config.yaml ^
 | Dataset | Model                                          | OA    |
 |---------|------------------------------------------------|-------|
 | SAR_MSI | [ResNet18](configs/sar_msi/resnet18_3090.yaml) | 0.818 |
+| VNR_MSI | [ResNet34](configs/vnr_msi/resnet34_3090.yaml) | 0.783 |
 
 ## <a name="license"></a> License
 

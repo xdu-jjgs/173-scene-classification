@@ -87,11 +87,11 @@ class PreprocessedVNRMSI(Dataset):
     @property
     def names(self):
         return [
-            '',
-            '',
-            '',
-            '',
-            '',
-            '',
-            '',
+            'building',
+            'cross',
+            'factory',
+            'farmland',
+            'highway',
+            'lake',
+            'river'
         ]
