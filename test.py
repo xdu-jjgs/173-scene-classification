@@ -95,7 +95,8 @@ def main():
     PA, mPA, Ps, Rs, F1S = metric.PA(), metric.mPA(), metric.Ps(), metric.Rs(), metric.F1s()
     logging.info('test | PA={:.3f} mPA={:.3f}'.format(PA, mPA))
     for c in range(NUM_CLASSES):
-        logging.info('test | class=#{} P={:.3f} R={:.3f} F1={:.3f}'.format(c, Ps[c], Rs[c], F1S[c]))
+        logging.info(
+            'test | class={}-{} P={:.3f} R={:.3f} F1={:.3f}'.format(c, test_dataset.names[c], Ps[c], Rs[c], F1S[c]))
 
 
 if __name__ == '__main__':

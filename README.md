@@ -104,6 +104,7 @@ python test.py runs/sar_msi/resnet18-train/config.yaml ^
 | Dataset | Model                                          | OA    |
 |---------|------------------------------------------------|-------|
 | SAR_MSI | [ResNet18](configs/sar_msi/resnet18_3090.yaml) | 0.818 |
+| SAR_MSI | [ResNet34](configs/sar_msi/resnet34_3090.yaml) | 0.847 |
 | VNR_MSI | [ResNet34](configs/vnr_msi/resnet34_3090.yaml) | 0.783 |
 
 ## <a name="license"></a> License

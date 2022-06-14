@@ -8,7 +8,7 @@ __all__ = [
 python train.py configs/sar_msi/resnet34_3090.yaml ^
         --path ./runs/sar_msi/resnet34-train ^
         --nodes 1 ^
-        --gpus 2 ^
+        --gpus 1 ^
         --rank-node 0 ^
         --backend gloo ^
         --master-ip localhost ^
@@ -24,7 +24,7 @@ python test.py runs/sar_msi/resnet34-train/config.yaml ^
 python train.py configs/vnr_msi/resnet34_3090.yaml ^
         --path ./runs/vnr_msi/resnet34-train ^
         --nodes 1 ^
-        --gpus 2 ^
+        --gpus 1 ^
         --rank-node 0 ^
         --backend gloo ^
         --master-ip localhost ^
