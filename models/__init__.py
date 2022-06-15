@@ -11,4 +11,6 @@ def build_model(num_channels, num_classes):
         return ResNet(num_channels, num_classes, 50)
     elif CFG.MODEL.NAME == 'resnet101':
         return ResNet(num_channels, num_classes, 101)
+    elif CFG.MODEL.NAME == 'resnet152':
+        return ResNet(num_channels, num_classes, 152)
     raise NotImplementedError('invalid model: {}'.format(CFG.MODEL.NAME))

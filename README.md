@@ -76,7 +76,6 @@ python preprocess_by_class.py configs/preprocess/vnr_msi.yaml ^
 ```
 
 ## <a name='train'> </a>模型训练
-
 ```shell
 python train.py configs/sar_msi/resnet18.yaml ^
         --path ./runs/sar_msi/resnet18-train ^
@@ -91,7 +90,6 @@ python train.py configs/sar_msi/resnet18.yaml ^
 ```
 
 ## <a name='test'> </a>模型测试
-
 ```shell
 python test.py runs/sar_msi/resnet18-train/config.yaml ^
         runs/sar_msi/resnet18-train/best.pth ^
@@ -105,7 +103,10 @@ python test.py runs/sar_msi/resnet18-train/config.yaml ^
 |---------|------------------------------------------------|-------|
 | SAR_MSI | [ResNet18](configs/sar_msi/resnet18.yaml) | 0.915 |
 | SAR_MSI | [ResNet34](configs/sar_msi/resnet34.yaml) | 0.898 |
+| SAR_MSI | [ResNet50](configs/sar_msi/resnet50.yaml) | 0.897 |
+| VNR_MSI | [ResNet18](configs/vnr_msi/resnet18.yaml) | 0.745 |
 | VNR_MSI | [ResNet34](configs/vnr_msi/resnet34.yaml) | 0.868 |
+| VNR_MSI | [ResNet50](configs/vnr_msi/resnet50.yaml) | 0.811 |
 
 ## <a name="license"></a> License
 

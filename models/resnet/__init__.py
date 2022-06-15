@@ -5,8 +5,8 @@ __all__ = [
 ]
 
 '''
-python train.py configs/sar_msi/resnet18.yaml ^
-        --path ./runs/sar_msi/resnet18-train ^
+python train.py configs/sar_msi/resnet50.yaml ^
+        --path ./runs/sar_msi/resnet50-train ^
         --nodes 1 ^
         --gpus 1 ^
         --rank-node 0 ^
@@ -16,13 +16,13 @@ python train.py configs/sar_msi/resnet18.yaml ^
         --seed 30 ^
         --opt-level O0
 
-python test.py runs/sar_msi/resnet18-train/config.yaml ^
-        runs/sar_msi/resnet18-train/best.pth ^
-        --path runs/sar_msi/resnet18-test ^
+python test.py runs/sar_msi/resnet50-train/config.yaml ^
+        runs/sar_msi/resnet50-train/best.pth ^
+        --path runs/sar_msi/resnet50-test ^
         --device cuda:0
         
-python train.py configs/vnr_msi/resnet34.yaml ^
-        --path ./runs/vnr_msi/resnet34-train ^
+python train.py configs/vnr_msi/resnet50.yaml ^
+        --path ./runs/vnr_msi/resnet50-train ^
         --nodes 1 ^
         --gpus 1 ^
         --rank-node 0 ^
@@ -32,8 +32,8 @@ python train.py configs/vnr_msi/resnet34.yaml ^
         --seed 30 ^
         --opt-level O0 
 
-python test.py runs/vnr_msi/resnet34-train/config.yaml ^
-        runs/vnr_msi/resnet34-train/best.pth ^
-        --path runs/vnr_msi/resnet34-test ^
+python test.py runs/vnr_msi/resnet50-train/config.yaml ^
+        runs/vnr_msi/resnet50-train/best.pth ^
+        --path runs/vnr_msi/resnet50-test ^
         --device cuda:0
 '''
