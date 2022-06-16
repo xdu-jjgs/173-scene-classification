@@ -1,5 +1,6 @@
 from configs import CFG
 from .resnet import ResNet
+from .xception import Xception
 
 
 def build_model(num_channels, num_classes):
@@ -13,4 +14,6 @@ def build_model(num_channels, num_classes):
         return ResNet(num_channels, num_classes, 101)
     elif CFG.MODEL.NAME == 'resnet152':
         return ResNet(num_channels, num_classes, 152)
+    elif CFG.MODEL.NAME == 'xception':
+        return Xception(num_channels, num_classes)
     raise NotImplementedError('invalid model: {}'.format(CFG.MODEL.NAME))

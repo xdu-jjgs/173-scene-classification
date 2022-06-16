@@ -10,3 +10,4 @@ torchfile
 torchvision
 tqdm
 yacs
+pretrainedmodels
