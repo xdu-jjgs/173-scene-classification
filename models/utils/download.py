@@ -3,14 +3,20 @@ import torch.nn as nn
 import torch.utils.model_zoo as model_zoo
 
 models2urls = {
-    'vgg16': 'https://download.pytorch.org/models/vgg16-397923af.pth',
-    'vgg16_bn': 'https://download.pytorch.org/models/vgg16_bn-6c64b313.pth',
-    'xception': 'http://data.lip6.fr/cadene/pretrainedmodels/xception-b5690688.pth',
+    "vgg11": "https://download.pytorch.org/models/vgg11-8a719046.pth",
+    "vgg13": "https://download.pytorch.org/models/vgg13-19584684.pth",
+    "vgg16": "https://download.pytorch.org/models/vgg16-397923af.pth",
+    "vgg19": "https://download.pytorch.org/models/vgg19-dcbb9e9d.pth",
+    "vgg11_bn": "https://download.pytorch.org/models/vgg11_bn-6002323d.pth",
+    "vgg13_bn": "https://download.pytorch.org/models/vgg13_bn-abd245e5.pth",
+    "vgg16_bn": "https://download.pytorch.org/models/vgg16_bn-6c64b313.pth",
+    "vgg19_bn": "https://download.pytorch.org/models/vgg19_bn-c79401a0.pth",
     'resnet18': 'https://download.pytorch.org/models/resnet18-f37072fd.pth',
     'resnet34': 'https://download.pytorch.org/models/resnet34-333f7ec4.pth',
     'resnet50': 'https://download.pytorch.org/models/resnet50-19c8e357.pth',
     'resnet101': 'https://download.pytorch.org/models/resnet101-5d3b4d8f.pth',
     'resnet152': 'https://download.pytorch.org/models/resnet152-b121ed2d.pth',
+    'xception': 'http://data.lip6.fr/cadene/pretrainedmodels/xception-43020ad28.pth',
 }
 
 
