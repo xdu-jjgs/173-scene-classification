@@ -99,14 +99,16 @@ python test.py runs/sar_msi/resnet18-train/config.yaml ^
 
 ## <a name='result'> </a>结果
 
-| Dataset | Model                                          | OA    |
-|---------|------------------------------------------------|-------|
-| SAR_MSI | [ResNet18](configs/sar_msi/resnet18.yaml) | 0.915 |
-| SAR_MSI | [ResNet34](configs/sar_msi/resnet34.yaml) | 0.898 |
-| SAR_MSI | [ResNet50](configs/sar_msi/resnet50.yaml) | 0.897 |
-| VNR_MSI | [ResNet18](configs/vnr_msi/resnet18.yaml) | 0.745 |
-| VNR_MSI | [ResNet34](configs/vnr_msi/resnet34.yaml) | 0.868 |
-| VNR_MSI | [ResNet50](configs/vnr_msi/resnet50.yaml) | 0.811 |
+| Dataset | Model                                     | OA-best| OA-last|
+|---------|-------------------------------------------|-------|-------|
+| SAR_MSI | [ResNet18](configs/sar_msi/resnet18.yaml) | 0.915 |0.898|
+| SAR_MSI | [ResNet34](configs/sar_msi/resnet34.yaml) | 0.898 |0.850|
+| SAR_MSI | [ResNet50](configs/sar_msi/resnet50.yaml) | 0.897 |0.898|
+| SAR_MSI | [ResNet101](configs/sar_msi/resnet101.yaml) | 0.910 |0.892|
+| VNR_MSI | [ResNet18](configs/vnr_msi/resnet18.yaml) | 0.745 |0.783|
+| VNR_MSI | [ResNet34](configs/vnr_msi/resnet34.yaml) | 0.868 |0.877|
+| VNR_MSI | [ResNet50](configs/vnr_msi/resnet50.yaml) | 0.708 |0.811|
+| VNR_MSI | [ResNet101](configs/vnr_msi/resnet101.yaml) | 0.708 |0.745|
 
 ## <a name="license"></a> License
 
