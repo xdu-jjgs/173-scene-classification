@@ -1,0 +1,26 @@
+DATASET:
+    NAME: 'PREPROCESSED_SAR_MSI'
+    ROOT: 'E:/zts/dataset/SAR_MSI_preprocessed'
+    FUSION: 'concat'
+
+DATALOADER:
+    BATCH_SIZE: 32
+    NUM_WORKERS: 8
+
+MODEL:
+    NAME: 'resnet18'
+
+CRITERION:
+    NAME: 'focal'
+
+OPTIMIZER:
+    NAME: 'adam'
+    LR: 0.001
+
+SCHEDULER:
+    NAME: 'plateau'
+    MODE: 'min'
+    FACTOR: 0.1
+    PATIENCE: 2
+
+EPOCHS: 40

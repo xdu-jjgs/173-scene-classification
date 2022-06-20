@@ -37,7 +37,7 @@ if __name__ == '__main__':
     # sen2s = np.array(sen2s).reshape(-1, 10)
     # print(np.mean(sen1s, axis=0), np.std(sen1s, axis=0))
     # print(np.mean(sen2s, axis=0), np.std(sen2s, axis=0))
-    # # ({5: 313, 3: 279, 2: 276, 1: 85, 0: 28, 4: 19})
+    # ({5: 313, 3: 279, 2: 276, 1: 85, 0: 28, 4: 19})
     # print(Counter(labels))
 
     # root = 'E:/zzy/173/data/vnr-gf'
