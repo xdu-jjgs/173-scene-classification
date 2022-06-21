@@ -39,7 +39,7 @@ def main():
             os.makedirs(save_path, exist_ok=True)
 
         sample_num = CFG.DATASET.SAMPLE_NUM[index]
-        sample_order = CFG.DATASET.SAMPLE_NUM.ORDER
+        sample_order = CFG.DATASET.SAMPLE_ORDER
         assert sample_order in ['sequence', 'average']
         dataset = build_dataset(split)
         # count = 0
@@ -59,7 +59,7 @@ def main():
                     'label': label
                 }
 
-                fw = open(os.path.join(save_path, '{}_{}.pkl'.format(count, label)), 'wb')
+                fw = open(os.path.join(save_path, '{}_{}.pkl'.format(sum(count), label)), 'wb')
                 pickle.dump(data, fw)
                 fw.close()
 

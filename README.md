@@ -60,7 +60,7 @@ TODO
 4. Z-Score归一化
 ```shell
 python preprocess_by_dataset.py configs/preprocess/sar_msi_2000_average.yaml ^
-      --path E:/zts/dataset/SAR_MSI_preprocessed
+      --path E:/zts/dataset/SAR_MSI_preprocessed_2000_average
 ```
 ### VNR_MSI数据集
 
@@ -78,8 +78,8 @@ python preprocess_by_class.py configs/preprocess/vnr_msi.yaml ^
 
 ## <a name='train'> </a>模型训练
 ```shell
-python train.py configs/sar_msi/resnet18_ce.yaml ^
-        --path ./runs/sar_msi/resnet18_ce-train ^
+python train.py configs/sar_msi_2000_average/resnet18_ce.yaml ^
+        --path ./runs/sar_msi_2000_average/resnet18_ce-train ^
         --nodes 1 ^
         --gpus 2 ^
         --rank-node 0 ^
@@ -92,9 +92,9 @@ python train.py configs/sar_msi/resnet18_ce.yaml ^
 
 ## <a name='test'> </a>模型测试
 ```shell
-python test.py runs/sar_msi/resnet18_ce-train/config.yaml ^
-        runs/sar_msi/resnet18_ce-train/best.pth ^
-        --path runs/sar_msi/resnet18-test ^
+python test.py runs/sar_msi_2000_average/resnet18_ce-train/config.yaml ^
+        runs/sar_msi_2000_sequence/resnet18_ce-train/best.pth ^
+        --path runs/sar_msi_2000_average/resnet18-test ^
         --device cuda:0
 ```
 
@@ -102,14 +102,14 @@ python test.py runs/sar_msi/resnet18_ce-train/config.yaml ^
 
 | Dataset | Model                                             | loss       | OA-best | OA-last |
 |---------|---------------------------------------------------|------------|---------|---------|
-| SAR_MSI | [ResNet18](configs/sar_msi/resnet18_ce.yaml)      | softmax+ce | 0.915   | 0.898   |
-| SAR_MSI | [ResNet34](configs/sar_msi/resnet34_ce.yaml)      | softmax+ce | 0.898   | 0.850   |
-| SAR_MSI | [ResNet34](configs/sar_msi/resnet34_focal.yaml)   | softmax+ce | 0.897   | 0.890   |
-| SAR_MSI | [ResNet50](configs/sar_msi/resnet50_ce.yaml)      | softmax+ce | 0.897   | 0.898   |
-| SAR_MSI | [ResNet50](configs/sar_msi/resnet50_focal.yaml)   | focal      | 0.892   | 0.897   |   
-| SAR_MSI | [ResNet101](configs/sar_msi/resnet101_ce.yaml)    | softmax+ce | 0.910   | 0.892   |
-| SAR_MSI | [ResNet101](configs/sar_msi/resnet101_focal.yaml) | focal      | 0.898   | 0.883   | 
-| SAR_MSI | [Xception](configs/sar_msi/xception_ce.yaml)      | softmax+ce | 0.905   | 0.903   |
+| SAR_MSI_2000_sequence | [ResNet18](configs/sar_msi_2000_sequence/resnet18_ce.yaml)      | softmax+ce | 0.915   | 0.898   |
+| SAR_MSI_2000_sequence | [ResNet34](configs/sar_msi_2000_sequence/resnet34_ce.yaml)      | softmax+ce | 0.898   | 0.850   |
+| SAR_MSI_2000_sequence | [ResNet34](configs/sar_msi_2000_sequence/resnet34_focal.yaml)   | softmax+ce | 0.897   | 0.890   |
+| SAR_MSI_2000_sequence | [ResNet50](configs/sar_msi_2000_sequence/resnet50_ce.yaml)      | softmax+ce | 0.897   | 0.898   |
+| SAR_MSI_2000_sequence | [ResNet50](configs/sar_msi_2000_sequence/resnet50_focal.yaml)   | focal      | 0.892   | 0.897   |   
+| SAR_MSI_2000_sequence | [ResNet101](configs/sar_msi_2000_sequence/resnet101_ce.yaml)    | softmax+ce | 0.910   | 0.892   |
+| SAR_MSI_2000_sequence | [ResNet101](configs/sar_msi_2000_sequence/resnet101_focal.yaml) | focal      | 0.898   | 0.883   | 
+| SAR_MSI_2000_sequence | [Xception](configs/sar_msi_2000_sequence/xception_ce.yaml)      | softmax+ce | 0.905   | 0.903   |
 | VNR_MSI | [ResNet18](configs/vnr_msi/resnet18_ce.yaml)      | softmax+ce | 0.745   | 0.783   |
 | VNR_MSI | [ResNet34](configs/vnr_msi/resnet34_ce.yaml)      | softmax+ce | 0.868   | 0.877   |
 | VNR_MSI | [ResNet50](configs/vnr_msi/resnet50_ce.yaml)      | softmax+ce | 0.708   | 0.811   |
