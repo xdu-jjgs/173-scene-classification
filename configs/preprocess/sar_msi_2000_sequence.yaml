@@ -47,6 +47,7 @@ DATASET:
         - 1000
         - 400
         - 600
+    SAMPLE_ORDER: 'sequence'
     CLASSES_INTEREST:
         - 0
         - 9

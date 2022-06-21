@@ -3,7 +3,6 @@ import json
 import pickle
 import argparse
 
-
 from configs import CFG
 from datetime import datetime
 
@@ -40,12 +39,19 @@ def main():
             os.makedirs(save_path, exist_ok=True)
 
         sample_num = CFG.DATASET.SAMPLE_NUM[index]
-        count = 0
+        sample_order = CFG.DATASET.SAMPLE_NUM.ORDER
+        assert sample_order in ['sequence', 'average']
         dataset = build_dataset(split)
+        # count = 0
+        count = [0] * len(CFG.DATASET.CLASSES_INTEREST)
+        single_num = sample_num // len(count)
         for sample in dataset:
             data, label = sample
             if data is not None:
-                count += 1
+                if sample_order == 'average' and count[label] >= single_num:
+                    continue
+                # label here has been reordered
+                count[label] += 1
                 # print(data[0].shape, data[1].shape, label)
                 data = {
                     'data1': data[0],
@@ -57,8 +63,20 @@ def main():
                 pickle.dump(data, fw)
                 fw.close()
 
-                if count >= sample_num:
+                if sample_order == 'sequence' and sum(count) >= sample_num:
                     break
+                elif sample_order == 'average' and min(count) >= single_num:
+                    break
+        else:
+            if sample_order == 'sequence':
+                print("Insufficient sample number for {} dataset, expect {} but actually {}".format(split, single_num,
+                                                                                                    sum(count)))
+            elif sample_order == 'average':
+                for ind, num in enumerate(count):
+                    if num < single_num:
+                        print(
+                            "Insufficient sample number for class {} in {} dataset, expect {} but actually {}.".format(
+                                dataset.names[ind], split, single_num, count[num]))
 
 
 if __name__ == '__main__':

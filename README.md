@@ -59,7 +59,7 @@ TODO
 3. 转为Tensor
 4. Z-Score归一化
 ```shell
-python preprocess_by_dataset.py configs/preprocess/sar_msi_2000.yaml ^
+python preprocess_by_dataset.py configs/preprocess/sar_msi_2000_average.yaml ^
       --path E:/zts/dataset/SAR_MSI_preprocessed
 ```
 ### VNR_MSI数据集
