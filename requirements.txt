@@ -1,0 +1,13 @@
+apex
+h5py
+numpy
+scipy
+sklearn
+scikit-learn
+tensorboardX
+torch
+torchfile
+torchvision
+tqdm
+yacs
+pretrainedmodels

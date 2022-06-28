@@ -1,0 +1,33 @@
+DATASET:
+    NAME: 'PREPROCESSED_SAR_MSI'
+    ROOT: 'E:/zts/dataset/SAR_MSI_preprocessed_2000_average'
+    FUSION: 'concat'
+    CLASSES_INTEREST:
+        - 0
+        - 9
+        - 10
+        - 13
+        - 14
+        - 16
+
+DATALOADER:
+    BATCH_SIZE: 32
+    NUM_WORKERS: 8
+
+MODEL:
+    NAME: 'resnet34'
+
+CRITERION:
+    NAME: 'softmax+ce'
+
+OPTIMIZER:
+    NAME: 'adam'
+    LR: 0.001
+
+SCHEDULER:
+    NAME: 'plateau'
+    MODE: 'min'
+    FACTOR: 0.1
+    PATIENCE: 2
+
+EPOCHS: 40
