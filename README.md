@@ -141,7 +141,8 @@ python test.py runs/sar_msi_2000_average_0,9,10,13,14,16/resnet18_ce-train/confi
 - [x] 数据选择：类别平衡
 - [ ] 数据增强
 - [x] 损失函数：Focal Loss
-- [ ] 更换SAR_MSI选择类别 保留0, 10, 16 排除9, 13, 14
+- [ ] 更换SAR_MSI选择类别 保留0-compact high-rise, 10-dense trees, 16-water 排除9-heavy industry, 13-bush/scrub, 14-bare
+  rock/paved
 
 ## <a name="license"></a> License
 
