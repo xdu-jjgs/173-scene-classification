@@ -1,14 +1,21 @@
 DATASET:
     NAME: 'PREPROCESSED_SAR_MSI'
-    ROOT: 'E:/zts/dataset/SAR_MSI_preprocessed'
+    ROOT: 'E:/zts/dataset/SAR_MSI_preprocessed_2000_average'
     FUSION: 'concat'
+    CLASSES_INTEREST:
+        - 0
+        - 9
+        - 10
+        - 13
+        - 14
+        - 16
 
 DATALOADER:
     BATCH_SIZE: 32
     NUM_WORKERS: 8
 
 MODEL:
-    NAME: 'resnet18'
+    NAME: 'resnet101'
 
 CRITERION:
     NAME: 'softmax+ce'

@@ -18,23 +18,23 @@
 数据集详情：https://github.com/zhu-xlab/So2Sat-LCZ42
 
 ####类别：
-1. 紧密型高层建筑
-2. 紧密型中层建筑
-3. 紧密型低层建筑
-4. 稀疏型高层建筑
-5. 稀疏型中层建筑
-6. 稀疏型低层建筑
-7. 轻型低层建筑
-8. 大型低层建筑
-9. 稀疏建筑
-10. 大型工厂
-11. 密集树木
-12. 点型树木
-13. 灌木丛
-14. 低矮植物
-15. 石头地
-16. 沙漠地
-17. 水域
+0. 紧密型高层建筑
+1. 紧密型中层建筑
+2. 紧密型低层建筑
+3. 稀疏型高层建筑
+4. 稀疏型中层建筑
+5. 稀疏型低层建筑
+6. 轻型低层建筑
+7. 大型低层建筑
+8. 稀疏建筑
+9. 大型工厂
+10. 密集树木
+11. 点型树木
+12. 灌木丛
+13. 低矮植物
+14. 石头地
+15. 沙漠地
+16. 水域
 
 ####数据量：
 训练集：352366，验证集：24119，测试集：24188
@@ -59,7 +59,7 @@ TODO
 3. 转为Tensor
 4. Z-Score归一化
 ```shell
-python preprocess_by_dataset.py configs/preprocess/sar_msi_2000_average.yaml ^
+python preprocess_by_dataset.py configs/preprocess/sar_msi_2000_average_0,9,10,13,14,16.yaml ^
       --path E:/zts/dataset/SAR_MSI_preprocessed_2000_average
 ```
 ### VNR_MSI数据集
@@ -78,8 +78,8 @@ python preprocess_by_class.py configs/preprocess/vnr_msi.yaml ^
 
 ## <a name='train'> </a>模型训练
 ```shell
-python train.py configs/sar_msi_2000_average/resnet18_ce.yaml ^
-        --path ./runs/sar_msi_2000_average/resnet18_ce-train ^
+python train.py configs/sar_msi_2000_average_0,9,10,13,14,16/resnet18_ce.yaml ^
+        --path ./runs/sar_msi_2000_average_0,9,10,13,14,16/resnet18_ce-train ^
         --nodes 1 ^
         --gpus 2 ^
         --rank-node 0 ^
@@ -92,34 +92,39 @@ python train.py configs/sar_msi_2000_average/resnet18_ce.yaml ^
 
 ## <a name='test'> </a>模型测试
 ```shell
-python test.py runs/sar_msi_2000_average/resnet18_ce-train/config.yaml ^
-        runs/sar_msi_2000_sequence/resnet18_ce-train/best.pth ^
-        --path runs/sar_msi_2000_average/resnet18-test ^
+python test.py runs/sar_msi_2000_average_0,9,10,13,14,16/resnet18_ce-train/config.yaml ^
+        runs/sar_msi_2000_sequence_0,9,10,13,14,16/resnet18_ce-train/best.pth ^
+        --path runs/sar_msi_2000_average_0,9,10,13,14,16/resnet18-test ^
         --device cuda:0
 ```
 
 ## <a name='result'> </a>结果
 
-| Dataset | Model                                             | loss       | OA-best | OA-last |
-|---------|---------------------------------------------------|------------|---------|---------|
-| SAR_MSI_2000_sequence | [ResNet18](configs/sar_msi_2000_sequence/resnet18_ce.yaml)      | softmax+ce | 0.915   | 0.898   |
-| SAR_MSI_2000_sequence | [ResNet34](configs/sar_msi_2000_sequence/resnet34_ce.yaml)      | softmax+ce | 0.898   | 0.850   |
-| SAR_MSI_2000_sequence | [ResNet34](configs/sar_msi_2000_sequence/resnet34_focal.yaml)   | softmax+ce | 0.897   | 0.890   |
-| SAR_MSI_2000_sequence | [ResNet50](configs/sar_msi_2000_sequence/resnet50_ce.yaml)      | softmax+ce | 0.897   | 0.898   |
-| SAR_MSI_2000_sequence | [ResNet50](configs/sar_msi_2000_sequence/resnet50_focal.yaml)   | focal      | 0.892   | 0.897   |   
-| SAR_MSI_2000_sequence | [ResNet101](configs/sar_msi_2000_sequence/resnet101_ce.yaml)    | softmax+ce | 0.910   | 0.892   |
-| SAR_MSI_2000_sequence | [ResNet101](configs/sar_msi_2000_sequence/resnet101_focal.yaml) | focal      | 0.898   | 0.883   | 
-| SAR_MSI_2000_sequence | [Xception](configs/sar_msi_2000_sequence/xception_ce.yaml)      | softmax+ce | 0.905   | 0.903   |
-| VNR_MSI | [ResNet18](configs/vnr_msi/resnet18_ce.yaml)      | softmax+ce | 0.745   | 0.783   |
-| VNR_MSI | [ResNet34](configs/vnr_msi/resnet34_ce.yaml)      | softmax+ce | 0.868   | 0.877   |
-| VNR_MSI | [ResNet50](configs/vnr_msi/resnet50_ce.yaml)      | softmax+ce | 0.708   | 0.811   |
-| VNR_MSI | [ResNet101](configs/vnr_msi/resnet101_ce.yaml)    | softmax+ce | 0.708   | 0.745   |
-| VNR_MSI | [Xception](configs/vnr_msi/xception_ce.yaml)      | softmax+ce | 0.792   | 0.858   |
+| Dataset | Model                                             | loss       | OA-best |AA-best| OA-last |AA-last|
+|---------|---------------------------------------------------|------------|---------|---------|-------|-------|
+| SAR_MSI_2000_sequence | [ResNet18](configs/sar_msi_2000_sequence_0,9,10,13,14,16/resnet18_ce.yaml)      | softmax+ce | 0.915   |-| 0.898   |-|
+| SAR_MSI_2000_sequence | [ResNet34](configs/sar_msi_2000_sequence_0,9,10,13,14,16/resnet34_ce.yaml)      | softmax+ce | 0.898   |-| 0.850   |-|
+| SAR_MSI_2000_sequence | [ResNet34](configs/sar_msi_2000_sequence_0,9,10,13,14,16/resnet34_focal.yaml)   | softmax+ce | 0.897   |-| 0.890   |-|
+| SAR_MSI_2000_sequence | [ResNet50](configs/sar_msi_2000_sequence_0,9,10,13,14,16/resnet50_ce.yaml)      | softmax+ce | 0.897   |0.708| 0.898   |0.851|
+| SAR_MSI_2000_sequence | [ResNet50](configs/sar_msi_2000_sequence_0,9,10,13,14,16/resnet50_focal.yaml)   | focal      | 0.892   |-| 0.897   |-|   
+| SAR_MSI_2000_sequence | [ResNet101](configs/sar_msi_2000_sequence_0,9,10,13,14,16/resnet101_ce.yaml)    | softmax+ce | 0.910   |0.804| 0.892   |0.782|
+| SAR_MSI_2000_sequence | [ResNet101](configs/sar_msi_2000_sequence_0,9,10,13,14,16/resnet101_focal.yaml) | focal      | 0.898   |-| 0.883   |-| 
+| SAR_MSI_2000_sequence | [Xception](configs/sar_msi_2000_sequence_0,9,10,13,14,16/xception_ce.yaml)      | softmax+ce | 0.905   |-| 0.903   | 0.810|
+| SAR_MSI_2000_average | [ResNet18](configs/sar_msi_2000_average_0,9,10,13,14,16/resnet18_ce.yaml)      | softmax+ce | 0.803   |0.812| 0.778   |0.798|
+| SAR_MSI_2000_average | [ResNet34](configs/sar_msi_2000_average_0,9,10,13,14,16/resnet34_ce.yaml)      | softmax+ce | 0.760   |0.777| 0.762   |0.777|
+| SAR_MSI_2000_average | [ResNet50](configs/sar_msi_2000_average_0,9,10,13,14,16/resnet50_ce.yaml)      | softmax+ce | 0.762   |0.776| 0.700   |0.716|
+| SAR_MSI_2000_average | [ResNet101](configs/sar_msi_2000_average_0,9,10,13,14,16/resnet101_ce.yaml)      | softmax+ce | 0.755   |0.774| 0.763   |0.777|
+| VNR_MSI | [ResNet18](configs/vnr_msi/resnet18_ce.yaml)      | softmax+ce | 0.745   |0.| 0.783   |0.|
+| VNR_MSI | [ResNet34](configs/vnr_msi/resnet34_ce.yaml)      | softmax+ce | 0.868   |0.| 0.877   |0.|
+| VNR_MSI | [ResNet50](configs/vnr_msi/resnet50_ce.yaml)      | softmax+ce | 0.708   |0.| 0.811   |0.|
+| VNR_MSI | [ResNet101](configs/vnr_msi/resnet101_ce.yaml)    | softmax+ce | 0.708   |0.| 0.745   |0.|
+| VNR_MSI | [Xception](configs/vnr_msi/xception_ce.yaml)      | softmax+ce | 0.792   |0.| 0.858   |0.|
 
 ## <a name="todo"></a> ToDO
-- [ ] 数据选择：类别平衡
+- [x] 数据选择：类别平衡
 - [ ] 数据增强   
 - [x] 损失函数：Focal Loss
+- [ ] 更换SAR_MSI选择类别 保留0, 10, 16 排除9, 13, 14
 
 ## <a name="license"></a> License
 

@@ -2,6 +2,7 @@ import os
 import pickle
 
 from datas.base import Dataset
+from datas.raw_dataset import RawSARMSI
 
 
 class PreprocessedSARMSI(Dataset):
@@ -36,16 +37,27 @@ class PreprocessedSARMSI(Dataset):
     @property
     def labels(self):
         # e.g. [0, 1, 2]
-        return list(range(6))
+        return list(range(len(self.names)))
 
     @property
     def names(self):
         return [
             'compact high-rise',  # 紧密型高层建筑
+            'compact middle-rise',  # 紧密型中层建筑
+            'compact low-rise',  # 紧密型低层建筑
+            'open high-rise',  # 稀疏型高层建筑
+            'open middle-rise',  # 稀疏型中层建筑
+            'open low-rise',  # 稀疏型低层建筑
+            'lightweight low-rise',  # 轻型低层建筑
+            'large low-rise',  # 大型低层建筑
+            'sparsely built',  # 稀疏建筑
             'heavy industry',  # 大型工厂
             'dense trees',  # 密集树木
+            'scattered trees',  # 点型树木
+            'bush& scrub',  # 灌木丛
             'low plants',  # 低矮植物
             'bare rock/ paved',  # 石头地
+            'bare soil/ sand',  # 沙漠地
             'water'  # 水域
         ]
 
@@ -82,7 +94,7 @@ class PreprocessedVNRMSI(Dataset):
     @property
     def labels(self):
         # e.g. [0, 1, 2]
-        return list(range(7))
+        return list(range(len(self.names)))
 
     @property
     def names(self):

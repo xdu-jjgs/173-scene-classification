@@ -2,6 +2,13 @@ DATASET:
     NAME: 'PREPROCESSED_SAR_MSI'
     ROOT: 'E:/zts/dataset/SAR_MSI_preprocessed'
     FUSION: 'concat'
+    CLASSES_INTEREST:
+        - 0
+        - 9
+        - 10
+        - 13
+        - 14
+        - 16
 
 DATALOADER:
     BATCH_SIZE: 32

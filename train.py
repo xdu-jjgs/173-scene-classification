@@ -125,11 +125,12 @@ def worker(rank_gpu, args):
         writer = SummaryWriter(logdir=args.path)
 
     # build dataset
+    class_interest = CFG.DATASET.CLASSES_INTEREST
     train_dataset = build_dataset('train')
     val_dataset = build_dataset('val')
     assert train_dataset.num_classes == val_dataset.num_classes
     NUM_CHANNELS = train_dataset.num_channels
-    NUM_CLASSES = train_dataset.num_classes
+    NUM_CLASSES = len(class_interest)
     # build data sampler
     train_sampler = DistributedSampler(train_dataset, shuffle=True)
     # build data loader
@@ -235,7 +236,8 @@ def worker(rank_gpu, args):
         for c in range(NUM_CLASSES):
             logging.info(
                 'rank{} train epoch={} | class={}-{} P={:.3f} R={:.3f} F1={:.3f}'.format(dist.get_rank(), epoch, c,
-                                                                                         train_dataset.names[c],
+                                                                                         train_dataset.names[
+                                                                                             class_interest[c]],
                                                                                          Ps[c], Rs[c], F1S[c]))
 
         # validate
@@ -279,7 +281,8 @@ def worker(rank_gpu, args):
         for c in range(NUM_CLASSES):
             logging.info(
                 'rank{} val epoch={} |  class={}-{} P={:.3f} R={:.3f} F1={:.3f}'.format(dist.get_rank(), epoch, c,
-                                                                                        val_dataset.names[c], Ps[c],
+                                                                                        val_dataset.names[
+                                                                                            class_interest[c]], Ps[c],
                                                                                         Rs[c], F1S[c]))
 
         # adjust learning rate if specified

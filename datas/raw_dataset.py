@@ -39,7 +39,7 @@ class RawSARMSI(Dataset):
     @property
     def labels(self):
         # e.g. [0, 1, 2]
-        return list(range(17))
+        return list(range(len(self.names)))
 
     @property
     def names(self):
