@@ -5,8 +5,8 @@ __all__ = [
 ]
 
 '''
-python train.py configs/sar_msi_2000_average_0,9,10,13,14,16/resnet101_ce.yaml ^
-        --path ./runs/sar_msi_2000_average_0,9,10,13,14,16/resnet101_ce-train ^
+python train.py configs/sar_msi_5000_average_0,6,8,10,15,16/resnet34_ce.yaml ^
+        --path ./runs/sar_msi_5000_average_0,6,8,10,15,16/resnet34_ce-train ^
         --nodes 1 ^
         --gpus 1 ^
         --rank-node 0 ^
@@ -16,9 +16,9 @@ python train.py configs/sar_msi_2000_average_0,9,10,13,14,16/resnet101_ce.yaml ^
         --seed 30 ^
         --opt-level O0
 
-python test.py runs/sar_msi_2000_average_0,9,10,13,14,16/resnet101_ce-train/config.yaml ^
-        runs/sar_msi_2000_average_0,9,10,13,14,16/resnet101_ce-train/best.pth ^
-        --path runs/sar_msi_2000_average_0,9,10,13,14,16/resnet101_ce-test-best ^
+python test.py runs/sar_msi_5000_average_0,6,8,10,15,16/resnet34_ce-train/config.yaml ^
+        runs/sar_msi_5000_average_0,6,8,10,15,16/resnet34_ce-train/last.pth ^
+        --path runs/sar_msi_5000_average_0,6,8,10,15,16/resnet34_ce-test-last ^
         --device cuda:0
 
 python train.py configs/vnr_msi/xception_ce.yaml ^
