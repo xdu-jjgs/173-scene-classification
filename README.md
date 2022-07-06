@@ -54,18 +54,27 @@ label:N * 17, one-hot
 
 #### <a name='dataset-sm-subdataset'> </a>子数据集
 1. sub1:
+   sequence
    train-val-test:1000-400-600
    0, 9, 10, 13, 14, 16
    compact high-rise、heavy industry、dense trees、low plants、bare rock/ paved、water
 2. sub2:
+   average
+   train-val-test:1000-400-600
+   0, 9, 10, 13, 14, 16
+   compact high-rise、heavy industry、dense trees、low plants、bare rock/ paved、water
+3. sub3:
+   average
    train-val-test:2000-400-600
    0, 6, 8, 10, 15, 16
    compact high-rise、lightweight low-rise、sparsely built、dense trees、bare soil/ sand、water
-3. sub3:
+4. sub4:
+   average
    train-val-test:3000-1000-1000
    0, 6, 7, 10, 15, 16
    compact high-rise、lightweight low-rise、large low-rise、dense trees、bare soil/ sand、water
-4. sub4:
+5. sub5:
+   average
    train-val-test:3000-1000-1000
    0, 6, 8, 10, 15, 16
    compact high-rise、lightweight low-rise、sparsely built、dense trees、bare soil/ sand、water
@@ -135,28 +144,28 @@ python test.py runs/sar_msi_2000_average_0,9,10,13,14,16/resnet18_ce-train/confi
 
 ## <a name='result'> </a>结果
 
-| Dataset               | Model                                                                           | loss       | OA-best | AA-best | OA-last | AA-last |
-|-----------------------|---------------------------------------------------------------------------------|------------|---------|---------|---------|---------|
-| SAR_MSI_2000_sequence_sub1 | [ResNet18](configs/sar_msi_2000_sequence_0,9,10,13,14,16/resnet18_ce.yaml)      | softmax+ce | 0.915   | -       | 0.898   | -       |
-| SAR_MSI_2000_sequence_sub1 | [ResNet34](configs/sar_msi_2000_sequence_0,9,10,13,14,16/resnet34_ce.yaml)      | softmax+ce | 0.898   | -       | 0.850   | -       |
-| SAR_MSI_2000_sequence_sub1 | [ResNet34](configs/sar_msi_2000_sequence_0,9,10,13,14,16/resnet34_focal.yaml)   | softmax+ce | 0.897   | -       | 0.890   | -       |
-| SAR_MSI_2000_sequence_sub1 | [ResNet50](configs/sar_msi_2000_sequence_0,9,10,13,14,16/resnet50_ce.yaml)      | softmax+ce | 0.897   | 0.708   | 0.898   | 0.851   |
-| SAR_MSI_2000_sequence_sub1 | [ResNet50](configs/sar_msi_2000_sequence_0,9,10,13,14,16/resnet50_focal.yaml)   | focal      | 0.892   | -       | 0.897   | -       |   
-| SAR_MSI_2000_sequence_sub1 | [ResNet101](configs/sar_msi_2000_sequence_0,9,10,13,14,16/resnet101_ce.yaml)    | softmax+ce | 0.910   | 0.804   | 0.892   | 0.782   |
-| SAR_MSI_2000_sequence_sub1 | [ResNet101](configs/sar_msi_2000_sequence_0,9,10,13,14,16/resnet101_focal.yaml) | focal      | 0.898   | -       | 0.883   | -       | 
-| SAR_MSI_2000_sequence_sub1 | [Xception](configs/sar_msi_2000_sequence_0,9,10,13,14,16/xception_ce.yaml)      | softmax+ce | 0.905   | -       | 0.903   | 0.810   |
-| SAR_MSI_2000_average_sub1  | [ResNet18](configs/sar_msi_2000_average_0,9,10,13,14,16/resnet18_ce.yaml)       | softmax+ce | 0.803   | 0.812   | 0.778   | 0.798   |
-| SAR_MSI_2000_average_sub1  | [ResNet34](configs/sar_msi_2000_average_0,9,10,13,14,16/resnet34_ce.yaml)       | softmax+ce | 0.760   | 0.777   | 0.762   | 0.777   |
-| SAR_MSI_2000_average_sub1  | [ResNet50](configs/sar_msi_2000_average_0,9,10,13,14,16/resnet50_ce.yaml)       | softmax+ce | 0.762   | 0.776   | 0.700   | 0.716   |
-| SAR_MSI_2000_average_sub1  | [ResNet101](configs/sar_msi_2000_average_0,9,10,13,14,16/resnet101_ce.yaml)     | softmax+ce | 0.755   | 0.774   | 0.763   | 0.777   |
-| SAR_MSI_2000_average_sub2  | [ResNet18](configs/sar_msi_3000_average_0,6,8,10,15,16/resnet18_ce.yaml)        | softmax+ce | 0.902   | 0.907   | 0.895   | 0.899   |
-| SAR_MSI_2000_average_sub2  | [ResNet34](configs/sar_msi_3000_average_0,6,8,10,15,16/resnet34_ce.yaml)        | softmax+ce | 0.920   | 0.923   | 0.887   | 0.896   |
-| SAR_MSI_2000_average_sub2  | [ResNet50](configs/sar_msi_3000_average_0,6,8,10,15,16/resnet50_ce.yaml)        | softmax+ce | 0.837   | 0.849   | 0.783   | 0.837   |
-| SAR_MSI_2000_average_sub2  | [ResNet101](configs/sar_msi_3000_average_0,6,8,10,15,16/resnet101_ce.yaml)      | softmax+ce | 0.865   | 0.867   | 0.833   | 0.843   |
-| SAR_MSI_2000_average_sub3  | [ResNet18](configs/sar_msi_3000_average_0,6,7,10,15,16/resnet18_ce.yaml)        | softmax+ce | 0.882   | 0.886   | 0.882   | 0.886   |
-| SAR_MSI_2000_average_sub3  | [ResNet34](configs/sar_msi_3000_average_0,6,7,10,15,16/resnet34_ce.yaml)        | softmax+ce | 0.898   | 0.902   | 0.863   | 0.879   |
-| SAR_MSI_2000_average_sub3  | [ResNet50](configs/sar_msi_3000_average_0,6,7,10,15,16/resnet50_ce.yaml)        | softmax+ce | 0.847   | 0.852   | 0.852   | 0.858   |
-| SAR_MSI_2000_average_sub4  | [ResNet34](configs/sar_msi_5000_average_0,6,8,10,15,16/resnet34_ce.yaml)        | softmax+ce | 0.906   | 0.908   | 0.881   | 0.883   |
+| Dataset               | Model                                                                           | loss       | OA-best | AA-best |worst-best| OA-last | AA-last |worst-last|
+|-----------------------|---------------------------------------------------------------------------------|------------|---------|---------|----------|---------|---------|-----|
+| SAR_MSI_sub1 | [ResNet18](configs/sar_msi_2000_sequence_0,9,10,13,14,16/resnet18_ce.yaml)      | softmax+ce | 0.915   | -       |-| 0.898   | -       |-|
+| SAR_MSI_sub1 | [ResNet34](configs/sar_msi_2000_sequence_0,9,10,13,14,16/resnet34_ce.yaml)      | softmax+ce | 0.898   | -       |-| 0.850   | -       |-|
+| SAR_MSI_sub1 | [ResNet34](configs/sar_msi_2000_sequence_0,9,10,13,14,16/resnet34_focal.yaml)   | softmax+ce | 0.897   | -       |-| 0.890   | -       |-|
+| SAR_MSI_sub1 | [ResNet50](configs/sar_msi_2000_sequence_0,9,10,13,14,16/resnet50_ce.yaml)      | softmax+ce | 0.897   | 0.708   |-| 0.898   | 0.851   |0.614|
+| SAR_MSI_sub1 | [ResNet50](configs/sar_msi_2000_sequence_0,9,10,13,14,16/resnet50_focal.yaml)   | focal      | 0.892   | -       |-| 0.897   | -       |-|   
+| SAR_MSI_sub1 | [ResNet101](configs/sar_msi_2000_sequence_0,9,10,13,14,16/resnet101_ce.yaml)    | softmax+ce | 0.910   | 0.804   |0.421| 0.892   | 0.782   |0.471|
+| SAR_MSI_sub1 | [ResNet101](configs/sar_msi_2000_sequence_0,9,10,13,14,16/resnet101_focal.yaml) | focal      | 0.898   | -       |-| 0.883   | -       |-| 
+| SAR_MSI_sub1 | [Xception](configs/sar_msi_2000_sequence_0,9,10,13,14,16/xception_ce.yaml)      | softmax+ce | 0.905   | -       |-| 0.903   | 0.810   |0.|
+| SAR_MSI_sub2  | [ResNet18](configs/sar_msi_2000_average_0,9,10,13,14,16/resnet18_ce.yaml)       | softmax+ce | 0.803   | 0.812   |0.558| 0.778   | 0.798   |0.534|
+| SAR_MSI_sub2  | [ResNet34](configs/sar_msi_2000_average_0,9,10,13,14,16/resnet34_ce.yaml)       | softmax+ce | 0.760   | 0.777   |0.520| 0.762   | 0.777   |0.530|
+| SAR_MSI_sub2  | [ResNet50](configs/sar_msi_2000_average_0,9,10,13,14,16/resnet50_ce.yaml)       | softmax+ce | 0.762   | 0.776   |0.545| 0.700   | 0.716   |0.487|
+| SAR_MSI_sub2  | [ResNet101](configs/sar_msi_2000_average_0,9,10,13,14,16/resnet101_ce.yaml)     | softmax+ce | 0.755   | 0.774   |0.471| 0.763   | 0.777   |0.485|
+| SAR_MSI_sub3  | [ResNet18](configs/sar_msi_3000_average_0,6,8,10,15,16/resnet18_ce.yaml)        | softmax+ce | 0.902   | 0.907   |0.784| 0.895   | 0.899   |0.773|
+| SAR_MSI_sub3  | [ResNet34](configs/sar_msi_3000_average_0,6,8,10,15,16/resnet34_ce.yaml)        | softmax+ce | 0.920   | 0.923   |0.841| 0.887   | 0.896   |0.736|
+| SAR_MSI_sub3  | [ResNet50](configs/sar_msi_3000_average_0,6,8,10,15,16/resnet50_ce.yaml)        | softmax+ce | 0.837   | 0.849   |0.688| 0.783   | 0.837   |0.531|
+| SAR_MSI_sub3  | [ResNet101](configs/sar_msi_3000_average_0,6,8,10,15,16/resnet101_ce.yaml)      | softmax+ce | 0.865   | 0.867   |0.792| 0.833   | 0.843   |0.712|
+| SAR_MSI_sub4  | [ResNet18](configs/sar_msi_3000_average_0,6,7,10,15,16/resnet18_ce.yaml)        | softmax+ce | 0.882   | 0.886   |0.780| 0.882   | 0.886   |0.780|
+| SAR_MSI_sub4  | [ResNet34](configs/sar_msi_3000_average_0,6,7,10,15,16/resnet34_ce.yaml)        | softmax+ce | 0.898   | 0.902   |0.800| 0.863   | 0.879   |0.686|
+| SAR_MSI_sub4  | [ResNet50](configs/sar_msi_3000_average_0,6,7,10,15,16/resnet50_ce.yaml)        | softmax+ce | 0.847   | 0.852   |0.702| 0.852   | 0.858   |0.724|
+| SAR_MSI_sub5  | [ResNet34](configs/sar_msi_5000_average_0,6,8,10,15,16/resnet34_ce.yaml)        | softmax+ce | 0.906   | 0.908   |0.860| 0.881   | 0.883   |0.765|
 | VNR_MSI               | [ResNet18](configs/vnr_msi/resnet18_ce.yaml)                                    | softmax+ce | 0.745   | 0.      | 0.783   | 0.      |
 | VNR_MSI               | [ResNet34](configs/vnr_msi/resnet34_ce.yaml)                                    | softmax+ce | 0.868   | 0.      | 0.877   | 0.      |
 | VNR_MSI               | [ResNet50](configs/vnr_msi/resnet50_ce.yaml)                                    | softmax+ce | 0.708   | 0.      | 0.811   | 0.      |
