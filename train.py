@@ -91,6 +91,7 @@ def worker(rank_gpu, args):
     with open(os.path.join(args.path, 'config.yaml'), 'w') as f:
         f.write(CFG.dump())
     # print(CFG)
+    assert CFG.EPOCHS % args.world_size == 0, 'cannot apportion epoch to gpus averagely'
     # log to file and stdout
     logging.basicConfig(
         level=logging.INFO,
@@ -177,7 +178,8 @@ def worker(rank_gpu, args):
 
     while True:
         epoch += 1
-        if epoch > CFG.EPOCHS:
+        # apportion epochs to each gpu averagely
+        if epoch > int(CFG.EPOCHS / args.world_size):
             logging.info("Best epoch:{}, PA:{:.3f}".format(best_epoch, best_PA))
             if dist.get_rank() == 0:
                 writer.close()
@@ -231,11 +233,12 @@ def worker(rank_gpu, args):
             writer.add_scalar('train/PA-epoch', PA, epoch)
             writer.add_scalar('train/mPA-epoch', mPA, epoch)
         logging.info(
-            'rank{} train epoch={} | loss={:.3f} PA={:.3f} mPA={:.3f}'.format(dist.get_rank(), epoch, train_loss, PA,
+            'rank{} train epoch={} | loss={:.3f} PA={:.3f} mPA={:.3f}'.format(dist.get_rank() + 1, epoch, train_loss,
+                                                                              PA,
                                                                               mPA))
         for c in range(NUM_CLASSES):
             logging.info(
-                'rank{} train epoch={} | class={}-{} P={:.3f} R={:.3f} F1={:.3f}'.format(dist.get_rank(), epoch, c,
+                'rank{} train epoch={} | class={}-{} P={:.3f} R={:.3f} F1={:.3f}'.format(dist.get_rank() + 1, epoch, c,
                                                                                          train_dataset.names[
                                                                                              class_interest[c]],
                                                                                          Ps[c], Rs[c], F1S[c]))
@@ -276,11 +279,11 @@ def worker(rank_gpu, args):
             best_epoch = epoch
 
         logging.info(
-            'rank{} val epoch={} | loss={:.3f} PA={:.3f} mPA={:.3f}'.format(dist.get_rank(), epoch, train_loss, PA,
+            'rank{} val epoch={} | loss={:.3f} PA={:.3f} mPA={:.3f}'.format(dist.get_rank() + 1, epoch, train_loss, PA,
                                                                             mPA))
         for c in range(NUM_CLASSES):
             logging.info(
-                'rank{} val epoch={} |  class={}-{} P={:.3f} R={:.3f} F1={:.3f}'.format(dist.get_rank(), epoch, c,
+                'rank{} val epoch={} |  class={}-{} P={:.3f} R={:.3f} F1={:.3f}'.format(dist.get_rank() + 1, epoch, c,
                                                                                         val_dataset.names[
                                                                                             class_interest[c]], Ps[c],
                                                                                         Rs[c], F1S[c]))
