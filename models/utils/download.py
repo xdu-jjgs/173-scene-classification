@@ -16,6 +16,10 @@ models2urls = {
     'resnet50': 'https://download.pytorch.org/models/resnet50-19c8e357.pth',
     'resnet101': 'https://download.pytorch.org/models/resnet101-5d3b4d8f.pth',
     'resnet152': 'https://download.pytorch.org/models/resnet152-b121ed2d.pth',
+    "densenet121": "https://download.pytorch.org/models/densenet121-a639ec97.pth",
+    "densenet161": "https://download.pytorch.org/models/densenet161-8d451a50.pth",
+    "densenet169": "https://download.pytorch.org/models/densenet169-b2777c0a.pth",
+    "densenet201": "https://download.pytorch.org/models/densenet201-c1103571.pth",
     'xception': 'http://data.lip6.fr/cadene/pretrainedmodels/xception-43020ad28.pth',
 }
 
