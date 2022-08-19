@@ -154,7 +154,10 @@ python preprocess_by_dataset.py configs/preprocess/sar_msi_5000_average_0,6,8,10
 #### 数据集制作
 
 ```shell
-python tools/dataset/vnr_msi/assemble.py D:/dataset/VNR_Raw/output_MATLAB --path D:/dataset/VNR_Raw/output_assemble --class-list building factory farmland river
+python tools/dataset/vnr_msi/assemble.py ^
+        D:/dataset/VNR_Raw/output_MATLAB ^
+        --path D:/dataset/VNR_Raw/output_assemble ^ 
+        --class-list building factory farmland river ^
 ```
 
 #### 预处理
