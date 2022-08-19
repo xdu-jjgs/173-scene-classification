@@ -74,15 +74,15 @@ class RawVNRMSI(Dataset):
         # N*256*256*3
         self.vnr = sio.loadmat(os.path.join(root, 'vnr_{}.mat'.format(split)))
         # N*256*256*4
-        self.gf = sio.loadmat(os.path.join(root, 'gf_{}.mat'.format(split)))
+        self.gf2 = sio.loadmat(os.path.join(root, 'gf2_{}.mat'.format(split)))
         self.label = split
 
         self.transform = transform
 
     def __getitem__(self, item):
         vnr = self.vnr['data'][item].astype('int32')
-        gf = self.gf['data'][item].astype('int32')
-        data = (vnr, gf)
+        gf2 = self.gf2['data'][item].astype('int32')
+        data = (vnr, gf2)
         label = self.class_list.index(self.label)
 
         if self.transform is not None:
