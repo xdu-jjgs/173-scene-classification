@@ -8,7 +8,7 @@ class DenseNet(nn.Module):
     def __init__(self, in_channels: int, num_classes: int, depth: int, pretrained=True):
         super(DenseNet, self).__init__()
         self.model_name = 'densenet{}'.format(depth)
-        model = getattr(models, self.model_name)(num_init_features=in_channels, num_classes=num_classes)
+        model = getattr(models, self.model_name)(num_classes=num_classes)
 
         if pretrained:
             model = load_pretrained_models(model, self.model_name)
