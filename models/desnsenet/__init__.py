@@ -14,7 +14,7 @@ python train.py configs/sar_msi_5000_average_0,6,8,10,15,16/densenet121_ce.yaml 
         --master-ip localhost ^
         --master-port 8888 ^
         --seed 30 ^
-        --opt-level O0
+        --opt-level O1
 
 python test.py runs/sar_msi_5000_average_0,6,8,10,15,16/densenet121_ce-train/config.yaml ^
         runs/sar_msi_5000_average_0,6,8,10,15,16/densenet121_ce-train/last.pth ^
