@@ -168,9 +168,9 @@ python tools/dataset/vnr_msi/assemble.py ^
 2. Z-Score归一化
 
 ```shell
-python preprocess_by_class.py configs/preprocess/vnr_msi.yaml ^
-        --path E:/zts/dataset/VNR_MSI_preprocessed ^
-        --train-val-test-portion 0.6 0.1 0.3 ^
+python preprocess_by_class.py configs/preprocess/vnr_msi_extend.yaml ^
+        --path E:/zts/dataset/VNR_MSI_extend_preprocessed ^
+        --train-val-test-portion 0.7 0.1 0.2 ^
         --class-list building cross factory farmland highway lake river
 ```
 

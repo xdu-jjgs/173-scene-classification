@@ -1,0 +1,26 @@
+DATASET:
+    NAME: 'PREPROCESSED_VNR_MSI_extend'
+    ROOT: 'E:/zts/dataset/VNR_MSI_extend_preprocessed'
+    FUSION: 'concat'
+
+DATALOADER:
+    BATCH_SIZE: 16
+    NUM_WORKERS: 8
+
+MODEL:
+    NAME: 'resnet34'
+
+CRITERION:
+    NAME: 'softmax+ce'
+
+OPTIMIZER:
+    NAME: 'adam'
+    LR: 0.001
+
+SCHEDULER:
+    NAME: 'plateau'
+    MODE: 'min'
+    FACTOR: 0.1
+    PATIENCE: 2
+
+EPOCHS: 40

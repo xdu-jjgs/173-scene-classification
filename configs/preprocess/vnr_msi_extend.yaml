@@ -1,0 +1,23 @@
+DATASET:
+    NAME: 'RAW_VNR_MSI'
+    ROOT: 'E:/zts/dataset/VNR_MSI_extend'
+    DATA1:
+        MEANS:
+            - 81.704
+            - 63.303
+            - 59.278
+        STDS:
+            - 15.906
+            - 17.071
+            - 12.155
+    DATA2:
+        MEANS:
+            - 370.493
+            - 265.821
+            - 205.450
+            - 261.324
+        STDS:
+            - 155.041
+            - 103.556
+            - 97.636
+            - 131.352
