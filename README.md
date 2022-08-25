@@ -221,6 +221,7 @@ python test.py runs/sar_msi_2000_average_0,9,10,13,14,16/resnet18_ce-train/confi
 | SAR_MSI_sub4 | [ResNet18](configs/sar_msi_3000_average_0,6,7,10,15,16/resnet18_ce.yaml)        | softmax+ce | 0.882   | 0.886   | 0.780      | 0.882   | 0.886   | 0.780      |
 | SAR_MSI_sub4 | [ResNet34](configs/sar_msi_3000_average_0,6,7,10,15,16/resnet34_ce.yaml)        | softmax+ce | 0.898   | 0.902   | 0.800      | 0.863   | 0.879   | 0.686      |
 | SAR_MSI_sub4 | [ResNet50](configs/sar_msi_3000_average_0,6,7,10,15,16/resnet50_ce.yaml)        | softmax+ce | 0.847   | 0.852   | 0.702      | 0.852   | 0.858   | 0.724      |
+| SAR_MSI_sub5 | [ResNet18](configs/sar_msi_5000_average_0,6,8,10,15,16/resnet18_ce.yaml)        | softmax+ce | 0.905   | 0.907   | 0.841      | 0.911   | 0.912   | 0.815      |
 | SAR_MSI_sub5 | [ResNet34](configs/sar_msi_5000_average_0,6,8,10,15,16/resnet34_ce.yaml)        | softmax+ce | 0.906   | 0.908   | 0.860      | 0.881   | 0.883   | 0.765      |
 | VNR_MSI      | [ResNet18](configs/vnr_msi/resnet18_ce.yaml)                                    | softmax+ce | 0.745   | 0.      | 0.783      | 0.      |
 | VNR_MSI      | [ResNet34](configs/vnr_msi/resnet34_ce.yaml)                                    | softmax+ce | 0.868   | 0.      | 0.877      | 0.      |

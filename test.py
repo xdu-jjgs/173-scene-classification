@@ -1,4 +1,6 @@
 import os
+
+import numpy as np
 import torch
 import logging
 import argparse
@@ -92,7 +94,7 @@ def main():
             label = label.data.cpu().numpy()
             metric.add(pred, label)
     PA, mPA, Ps, Rs, F1S = metric.PA(), metric.mPA(), metric.Ps(), metric.Rs(), metric.F1s()
-    logging.info('test | PA={:.3f} mPA={:.3f} worst={:.3f}'.format(PA, mPA, min(mPA)))
+    logging.info('test | PA={:.3f} mPA={:.3f} worst={:.3f}'.format(PA, mPA, min(Ps)))
     for c in range(NUM_CLASSES):
         logging.info(
             'test | class={}-{} P={:.3f} R={:.3f} F1={:.3f}'.format(c, test_dataset.names[class_interest[c]], Ps[c],
