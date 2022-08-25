@@ -1,3 +1,4 @@
+call "E:\zts\software\Anaconda\Scripts\activate.bat" zts
 cd E:\zts\173-scene-classification
 
 rem ResNet18
