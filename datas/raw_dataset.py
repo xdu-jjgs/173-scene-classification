@@ -80,8 +80,8 @@ class RawVNRMSI(Dataset):
         self.transform = transform
 
     def __getitem__(self, item):
-        vnr = self.vnr['data'][item].astype('int32')
-        gf2 = self.gf2['data'][item].astype('int32')
+        vnr = self.vnr['data'][item].astype('int16')
+        gf2 = self.gf2['data'][item].astype('int16')
         data = (vnr, gf2)
         label = self.class_list.index(self.label)
 

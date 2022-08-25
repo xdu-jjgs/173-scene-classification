@@ -67,7 +67,7 @@ class ToTensorPreSubData(nn.Module):
         super(ToTensorPreSubData, self).__init__()
 
     def forward(self, image, label):
-        image = [torch.tensor(data, dtype=torch.float) for data in image]
+        image = [torch.tensor(data, dtype=torch.float16) for data in image]
         image = [torch.permute(data, (0, 3, 1, 2)) for data in image]
         return image, label
 
