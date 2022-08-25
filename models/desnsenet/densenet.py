@@ -12,7 +12,7 @@ class DenseNet(nn.Module):
 
         if pretrained:
             model = load_pretrained_models(model, self.model_name)
-        model.features['conv0'] = nn.Conv2d(3, model.features['conv0'].out_channels, kernel_size=7, stride=2, padding=3,
+        model.features['conv0'] = nn.Conv2d(in_channels, model.features['conv0'].out_channels, kernel_size=7, stride=2, padding=3,
                                             bias=False)
 
         self.model = model
