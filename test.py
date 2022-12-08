@@ -56,10 +56,9 @@ def main():
         ])
 
     # build dataset
-    class_interest = CFG.DATASET.CLASSES_INTEREST
     test_dataset = build_dataset('test')
     NUM_CHANNELS = test_dataset.num_channels
-    NUM_CLASSES = len(class_interest)
+    NUM_CLASSES = test_dataset.num_classes
     # build data loader
     test_dataloader = build_dataloader(test_dataset, 'test')
     # build model
@@ -97,7 +96,7 @@ def main():
     logging.info('test | PA={:.3f} mPA={:.3f} worst={:.3f}'.format(PA, mPA, min(Ps)))
     for c in range(NUM_CLASSES):
         logging.info(
-            'test | class={}-{} P={:.3f} R={:.3f} F1={:.3f}'.format(c, test_dataset.names[class_interest[c]], Ps[c],
+            'test | class={}-{} P={:.3f} R={:.3f} F1={:.3f}'.format(c, test_dataset.names[c], Ps[c],
                                                                     Rs[c], F1S[c]))
 
 

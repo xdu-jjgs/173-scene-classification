@@ -57,26 +57,29 @@ if __name__ == '__main__':
     # [81.70422723 63.30309003 59.27793157] [370.49314086 265.82070497 205.45011425 261.32390816]
     # [15.90605595 17.07094243 12.1546073 ] [155.0407625  103.55639846  97.63619095 131.35244962]
 
-    root = 'E:/zts/dataset/VNR_MSI_extend_preprocessed/train'
+    root = 'E:/zts/dataset/VNR_MSI_extend_preprocessed/val'
     files = [os.path.join(root, file) for file in os.listdir(root)]
     vnrs = []
     gfs = []
     labels = []
     for file in files:
-        fo = open(file, 'rb')
-        data = pickle.load(fo)
-        vnr = data['data1'].numpy()
-        gf = data['data2'].numpy()
+        # fo = open(file, 'rb')
+        # data = pickle.load(fo)
+        # vnr = data['data1'].numpy()
+        # gf = data['data2'].numpy()
         label = int(file.split('_')[-1].split('.')[0])
-        vnrs.append(vnr)
-        gfs.append(gf)
+        # vnrs.append(vnr)
+        # gfs.append(gf)
         labels.append(label)
-        print(file)
+        # print(file)
     vnrs = np.array(vnrs).reshape(-1, 3)
     gfs = np.array(gfs).reshape(-1, 4)
     print(np.mean(vnrs, axis=0), np.std(vnrs, axis=0))
     print(np.mean(gfs, axis=0), np.std(gfs, axis=0))
     # Counter({4: 31, 6: 31, 3: 31, 0: 31, 2: 31, 1: 30, 5: 14})
-    # Counter({4: 241, 1: 169, 5: 121, 2: 109, 3: 105, 6: 105, 0: 105})
+
+    # Counter({4: 241, 1: 169, 5: 121, 2: 109, 3: 105, 6: 105, 0: 105}) extend-train
+    # Counter({4: 70, 1: 49, 5: 35, 2: 32, 3: 30, 0: 30, 6: 30}) extend-test
+    # Counter({4: 34, 1: 24, 5: 17, 2: 15, 3: 15, 6: 15, 0: 15}) extend-val
     print(Counter(labels))
 
