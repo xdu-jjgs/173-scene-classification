@@ -202,7 +202,7 @@ if __name__ == '__main__':
     # -----在此可调用train_1.py，训练模型1---------------
     # --------加载模型1----------------------------
 
-    os.system("python train.py configs/sar_msi_5000_average_0,6,8,10,15,16/resnet34_ce_tmp.yaml "
+    os.system("python train/classifier/train.py configs/sar_msi_5000_average_0,6,8,10,15,16/resnet34_ce_tmp.yaml "
               "--path {} "
               "--nodes 1 "
               "--gpus 1 "
@@ -219,7 +219,7 @@ if __name__ == '__main__':
 
     # -----在此可调用train_2.py，训练模型2---------------
     # --------加载模型2------------------------------
-    os.system("python train.py configs/sar_msi_5000_average_0,6,8,10,15,16/resnet34_ce_tmp.yaml "
+    os.system("python train/classifier/train.py configs/sar_msi_5000_average_0,6,8,10,15,16/resnet34_ce_tmp.yaml "
               "--path {} "
               "--nodes 1 "
               "--gpus 1 "
@@ -235,7 +235,7 @@ if __name__ == '__main__':
 
     # -----在此可调用train_3.py，训练模型3---------------
     # --------加载模型3------------------------------
-    os.system("python train.py configs/sar_msi_5000_average_0,6,8,10,15,16/resnet34_ce_tmp.yaml "
+    os.system("python train/classifier/train.py configs/sar_msi_5000_average_0,6,8,10,15,16/resnet34_ce_tmp.yaml "
               "--path {} "
               "--nodes 1 "
               "--gpus 1 "

@@ -5,7 +5,7 @@ __all__ = [
 ]
 
 '''
-python train.py configs/sar_msi_5000_average_0,6,8,10,15,16/resnet34_ce.yaml ^
+python train/classifier/train.py configs/sar_msi_5000_average_0,6,8,10,15,16/resnet34_ce.yaml ^
         --path ./runs/sar_msi_5000_average_0,6,8,10,15,16/resnet34_ce-train ^
         --nodes 1 ^
         --gpus 1 ^
@@ -21,7 +21,7 @@ python test.py runs/sar_msi_5000_average_0,6,8,10,15,16/resnet34_ce-train/config
         --path runs/sar_msi_5000_average_0,6,8,10,15,16/resnet34_ce-test-last ^
         --device cuda:0
 
-python train.py configs/vnr_msi/xception_ce.yaml ^
+python train/classifier/train.py configs/vnr_msi/xception_ce.yaml ^
         --path ./runs/vnr_msi/xception_ce-train ^
         --nodes 1 ^
         --gpus 1 ^

@@ -177,7 +177,7 @@ python preprocess_by_class.py configs/preprocess/vnr_msi.yaml ^
 ## <a name='train'> </a>模型训练
 
 ```shell
-python train.py configs/sar_msi_2000_average_0,9,10,13,14,16/resnet18_ce.yaml ^
+python train/classifier/train.py configs/sar_msi_2000_average_0,9,10,13,14,16/resnet18_ce.yaml ^
         --path ./runs/sar_msi_2000_average_0,9,10,13,14,16/resnet18_ce-train ^
         --nodes 1 ^
         --gpus 2 ^

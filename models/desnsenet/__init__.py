@@ -5,7 +5,7 @@ __all__ = [
 ]
 
 '''
-python train.py configs/sar_msi_5000_average_0,6,8,10,15,16/densenet121_ce.yaml ^
+python train/classifier/train.py configs/sar_msi_5000_average_0,6,8,10,15,16/densenet121_ce.yaml ^
         --path ./runs/sar_msi_5000_average_0,6,8,10,15,16/densenet121_ce-train ^
         --nodes 1 ^
         --gpus 1 ^
