@@ -3,17 +3,19 @@ import torch.nn as nn
 
 
 class FuseNet(nn.Module):
-    def __init__(self, in_channels, out_channels):
+    def __init__(self, in_channels, classifier):
         super(FuseNet, self).__init__()
-        self.fuseblock1 = OctaveCB(in_channels=in_channels, out_channels=out_channels)
-        self.fuseblock2 = OctaveCB(in_channels=in_channels, out_channels=out_channels)
-        self.fuseblock3 = OctaveCB(in_channels=in_channels, out_channels=out_channels)
+        self.fuseblock1 = OctaveCB(in_channels=in_channels, out_channels=in_channels * 2)
+        self.fuseblock2 = OctaveCB(in_channels=in_channels, out_channels=in_channels * 2)
+        self.fuseblock3 = OctaveCB(in_channels=in_channels, out_channels=in_channels * 2)
+        self.classifier = classifier
 
     def forward(self, x1, x2):
         x1, x2 = self.fuseblock1(x1, x2)
         x1, x2 = self.fuseblock2(x1, x2)
         x1, x2 = self.fuseblock3(x1, x2)
         out = torch.cat((x1, x2), dim=1)
+        out = self.classifier(out)
         return out
 
 
@@ -39,8 +41,8 @@ class OctaveConv(nn.Module):
         X_l2l = self.l2l(x2)
         X_h2l = self.h2l(x1)
 
-        X_h = self.alpha * X_l2h + (1-self.alpha) * X_h2h
-        X_l = self.beta * X_h2l + (1-self.beta) * X_l2l
+        X_h = self.alpha * X_l2h + (1 - self.alpha) * X_h2h
+        X_l = self.beta * X_h2l + (1 - self.beta) * X_l2l
 
         return X_h, X_l
 
@@ -49,7 +51,8 @@ class OctaveCBR(nn.Module):
     def __init__(self, in_channels, out_channels, kernel_size=3, alpha=0.8, beta=0.8, stride=1, padding=1, dilation=1,
                  groups=1, bias=False, norm_layer=nn.BatchNorm2d):
         super(OctaveCBR, self).__init__()
-        self.conv = OctaveConv(in_channels, out_channels, kernel_size, alpha, beta, stride, padding, dilation, groups, bias)
+        self.conv = OctaveConv(in_channels, out_channels, kernel_size, alpha, beta, stride, padding, dilation, groups,
+                               bias)
         self.bn_h = norm_layer(out_channels)
         self.bn_l = norm_layer(out_channels)
         self.relu = nn.ReLU(inplace=True)

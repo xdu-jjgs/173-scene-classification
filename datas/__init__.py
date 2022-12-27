@@ -34,8 +34,10 @@ def build_transform():
             transform = transforms.Compose([
                 transforms.DataConcat()
             ])
-        else:
+        elif CFG.DATASET.FUSION == 'fusion':
             transform = None
+        else:
+            raise NotImplementedError('invalid fusion strategy: {} for transform'.format(CFG.DATASET.FUSION))
     else:
         raise NotImplementedError('invalid dataset: {} for transform'.format(CFG.DATASET.NAME))
     return transform
