@@ -199,8 +199,9 @@ def worker(rank_gpu, args):
         for x, label in train_bar:
             iteration += 1
 
-            x, label = x.to(device), label.to(device)
-            y = model(x[0], x[1])
+            x1, x2 = x[0].to(device), x[1].to(device)
+            label = label.to(device)
+            y = model(x1, x2)
             # print("Y shape: {}, label shape:;{}".format(y.shape, label.shape))
 
             loss = criterion(y, label)
@@ -252,8 +253,9 @@ def worker(rank_gpu, args):
         val_loss = 0.
         with torch.no_grad():  # disable gradient back-propagation
             for x, label in val_bar:
-                x, label = x.to(device), label.to(device)
-                y = model(x)
+                x1, x2 = x[0].to(device), x[1].to(device)
+                label = label.to(device)
+                y = model(x1, x2)
 
                 loss = criterion(y, label)
                 val_loss += loss.item()

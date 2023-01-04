@@ -6,7 +6,9 @@ from .vgg import VGG
 from .fusenet import FuseNet
 
 
-def build_model(num_channels, num_classes, model_name: str = CFG.MODEL.NAME):
+def build_model(num_channels, num_classes, model_name: str = None):
+    if model_name is None:
+        model_name = CFG.MODEL.NAME
     if model_name == 'resnet18':
         return ResNet(num_channels, num_classes, 18)
     elif model_name == 'resnet34':
@@ -31,5 +33,6 @@ def build_model(num_channels, num_classes, model_name: str = CFG.MODEL.NAME):
         return VGG(num_channels, num_classes, depth=16)
     elif '_fusenet' in model_name:
         classifier = build_model(num_channels, num_classes, model_name.split('_')[0])
-        return FuseNet(num_channels // 2, classifier)
+        return FuseNet(num_channels, classifier)
+    # print(model_name, CFG)
     raise NotImplementedError('invalid model: {}'.format(model_name))

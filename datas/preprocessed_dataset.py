@@ -35,7 +35,7 @@ class PreprocessedSARMSI(Dataset):
         try:
             return sens.size()[0]
         except AttributeError:
-            return sens.size()[0][0]
+            return sens[0].size()[0], sens[1].size()[0]
 
     @property
     def labels(self):
