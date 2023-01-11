@@ -7,8 +7,9 @@ from models.utils.download import load_pretrained_models
 
 class ResNet(nn.Module):
     def __init__(self, in_channels: int, num_classes: int, depth: int, pretrained=True,
-                 replace_stride_with_dilation=None):
+                 replace_stride_with_dilation=None, return_features: bool = False):
         super(ResNet, self).__init__()
+        self.return_features = return_features
         self.model_name = 'resnet{}'.format(depth)
         model = getattr(models, self.model_name)(replace_stride_with_dilation=replace_stride_with_dilation)
         depth2channels = {
@@ -17,7 +18,7 @@ class ResNet(nn.Module):
             50: 2048,
             101: 2048,
         }
-        out_channels = depth2channels[depth]
+        self.out_channels = depth2channels[depth]
 
         if pretrained:
             model = load_pretrained_models(model, self.model_name)
@@ -33,7 +34,7 @@ class ResNet(nn.Module):
         self.layer3 = model.layer3
         self.layer4 = model.layer4
         self.avgpool = model.avgpool
-        self.fc = nn.Linear(out_channels, num_classes)
+        self.fc = nn.Linear(self.out_channels, num_classes)
 
     def forward(self, x):
         x = self.layer0(x)
@@ -42,6 +43,8 @@ class ResNet(nn.Module):
         x = self.layer3(x)
         x = self.layer4(x)
         x = self.avgpool(x)
+        if self.return_features:
+            return x
         x = torch.flatten(x, 1)
         x = self.fc(x)
         return x

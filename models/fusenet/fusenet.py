@@ -3,22 +3,26 @@ import torch.nn as nn
 
 
 class FuseNet(nn.Module):
-    def __init__(self, in_channels, classifier):
+    def __init__(self, num_classes, classifier1, classifier2):
         super(FuseNet, self).__init__()
-        channels1, channels2 = in_channels
-        print("channels:{}".format(in_channels))
-        self.fuseblock1 = OctaveCB(in_channels=in_channels, out_channels=in_channels, beta=0.8)
-        self.fuseblock2 = OctaveCB(in_channels=in_channels, out_channels=in_channels, beta=0.8)
-        self.fuseblock3 = OctaveCB(in_channels=in_channels, out_channels=in_channels, beta=0.8)
-        self.classifier = classifier
+        assert classifier1.out_channels == classifier2.out_channels
+        out_channels = classifier1.out_channels // 2
+        self.fuseblock1 = OctaveCB(in_channels=classifier1.out_channels, out_channels=out_channels, beta=0.8)
+        self.fuseblock2 = OctaveCB(in_channels=out_channels, out_channels=out_channels, beta=0.8)
+        self.fuseblock3 = OctaveCB(in_channels=out_channels, out_channels=out_channels, beta=0.8)
+        self.classifier1 = classifier1
+        self.classifier2 = classifier2
+        self.fc = nn.Linear(out_channels * 2, num_classes)
 
     def forward(self, x1, x2):
-        print("x1 :{}, x2:{}".format(x1.size(), x2.size()))
+        x1, x2 = self.classifier1(x1), self.classifier2(x2)
+        # print("x1 :{}, x2:{}".format(x1.size(), x2.size()))
         x1, x2 = self.fuseblock1(x1, x2)
         x1, x2 = self.fuseblock2(x1, x2)
         x1, x2 = self.fuseblock3(x1, x2)
         out = torch.cat((x1, x2), dim=1)
-        out = self.classifier(out)
+        out = torch.flatten(out, 1)
+        out = self.fc(out)
         return out
 
 
@@ -28,16 +32,14 @@ class OctaveConv(nn.Module):
         super(OctaveConv, self).__init__()
         self.alpha = alpha
         self.beta = beta
-        channels1, channels2 = in_channels
-        print(in_channels, out_channels, groups)
-        self.h2h = torch.nn.Conv2d(channels1, out_channels,
+        self.h2h = torch.nn.Conv2d(in_channels, out_channels,
                                    kernel_size, stride, padding, dilation, groups, bias)
-        self.h2l = torch.nn.Conv2d(out_channels, out_channels,
+        self.h2l = torch.nn.Conv2d(in_channels, out_channels,
                                    kernel_size, stride, padding, dilation, groups, bias)
 
-        self.l2h = torch.nn.Conv2d(channels2, out_channels,
+        self.l2h = torch.nn.Conv2d(in_channels, out_channels,
                                    kernel_size, stride, padding, dilation, groups, bias)
-        self.l2l = torch.nn.Conv2d(out_channels, out_channels,
+        self.l2l = torch.nn.Conv2d(in_channels, out_channels,
                                    kernel_size, stride, padding, dilation, groups, bias)
 
     def forward(self, x1, x2):
@@ -77,8 +79,8 @@ class OctaveCB(nn.Module):
         super(OctaveCB, self).__init__()
         self.conv = OctaveConv(in_channels, out_channels, kernel_size, alpha, beta, stride, padding,
                                dilation, groups, bias)
-        self.bn_h = norm_layer(int(out_channels * (1 - alpha)))
-        self.bn_l = norm_layer(int(out_channels * alpha))
+        self.bn_h = norm_layer(int(out_channels))
+        self.bn_l = norm_layer(int(out_channels))
 
     def forward(self, x1, x2):
         x_h, x_l = self.conv(x1, x2)
