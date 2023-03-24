@@ -9,6 +9,7 @@ from datetime import datetime
 from configs import CFG
 from metric import Metric
 from models import build_model
+from utils import plot_confusion_matrix
 from datas import build_dataset, build_dataloader
 
 
@@ -97,7 +98,8 @@ def main():
         logging.info(
             'test | class={}-{} P={:.3f} R={:.3f} F1={:.3f}'.format(c, test_dataset.names[class_interest[c]], Ps[c],
                                                                     Rs[c], F1S[c]))
-    logging.info(metric.matrix)
+    # logging.info(metric.matrix)
+    plot_confusion_matrix(metric.matrix, os.path.join(args.path, 'confusion_matrix.png'))
 
 
 if __name__ == '__main__':
