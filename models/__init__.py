@@ -1,9 +1,10 @@
+from .vgg import VGG
+from .omoe import OMOE
 from configs import CFG
 from .resnet import ResNet
-from .desnsenet import DenseNet
-from .xception import Xception
-from .vgg import VGG
 from .fusenet import FuseNet
+from .xception import Xception
+from .desnsenet import DenseNet
 
 
 def build_model(num_channels, num_classes, model_name: str = None, return_features:bool=False):
@@ -31,6 +32,9 @@ def build_model(num_channels, num_classes, model_name: str = None, return_featur
         return Xception(num_channels, num_classes)
     elif model_name == 'vgg16':
         return VGG(num_channels, num_classes, depth=16)
+    elif model_name == 'omoe':
+        backbone_ = [build_model(num_channels, num_classes, i) for i in CFG.MODEL.EXPERTS]
+        return OMOE(num_classes, backbone_)
     elif '_fusenet' in model_name:
         classifier1 = build_model(num_channels[0], num_classes, model_name.split('_')[0], return_features=True)
         classifier2 = build_model(num_channels[1], num_classes, model_name.split('_')[0], return_features=True)

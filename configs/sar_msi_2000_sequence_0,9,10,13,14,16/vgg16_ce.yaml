@@ -1,33 +1,33 @@
 DATASET:
-    NAME: 'PREPROCESSED_SAR_MSI'
-    ROOT: 'E:/zts/dataset/SAR_MSI_preprocessed'
-    FUSION: 'concat'
-    CLASSES_INTEREST:
-        - 0
-        - 9
-        - 10
-        - 13
-        - 14
-        - 16
+  NAME: 'PREPROCESSED_SAR_MSI'
+  ROOT: 'E:/zts/dataset/SAR_MSI_preprocessed'
+  FUSION: 'concat'
+  CLASSES_INTEREST:
+    - 0
+    - 9
+    - 10
+    - 13
+    - 14
+    - 16
 
 DATALOADER:
-    BATCH_SIZE: 32
-    NUM_WORKERS: 8
+  BATCH_SIZE: 32
+  NUM_WORKERS: 8
 
 MODEL:
-    NAME: 'vgg16'
+  NAME: 'vgg16'
 
 CRITERION:
-    NAME: 'softmax+ce'
+  NAME: 'softmax+ce'
 
 OPTIMIZER:
-    NAME: 'adam'
-    LR: 0.001
+  NAME: 'adam'
+  LR: 0.001
 
 SCHEDULER:
-    NAME: 'plateau'
-    MODE: 'min'
-    FACTOR: 0.1
-    PATIENCE: 2
+  NAME: 'plateau'
+  MODE: 'min'
+  FACTOR: 0.1
+  PATIENCE: 2
 
 EPOCHS: 40

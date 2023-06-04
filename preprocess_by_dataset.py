@@ -77,7 +77,7 @@ def main():
                         print(
                             "Insufficient sample number for class {} in {} dataset, expect {} but actually {}.".format(
                                 dataset.names[ind], split, single_num, count[num]))
-        print("{}: {}".format(split,count))
+        print("{}: {}".format(split, count))
 
 
 if __name__ == '__main__':

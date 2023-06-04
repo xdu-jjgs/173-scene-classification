@@ -1,33 +1,33 @@
 DATASET:
-    NAME: 'PREPROCESSED_SAR_MSI'
-    ROOT: 'E:/zts/dataset/SAR_MSI_preprocessed_5000_average_0,6,8,10,15,16'
-    FUSION: 'fusion'
-    CLASSES_INTEREST:
-        - 0
-        - 6
-        - 8
-        - 10
-        - 15
-        - 16
+  NAME: 'PREPROCESSED_SAR_MSI'
+  ROOT: 'E:/zts/dataset/SAR_MSI_preprocessed_5000_average_0,6,8,10,15,16'
+  FUSION: 'fusion'
+  CLASSES_INTEREST:
+    - 0
+    - 6
+    - 8
+    - 10
+    - 15
+    - 16
 
 DATALOADER:
-    BATCH_SIZE: 32
-    NUM_WORKERS: 0
+  BATCH_SIZE: 32
+  NUM_WORKERS: 0
 
 MODEL:
-    NAME: 'resnet34_fusenet'
+  NAME: 'resnet34_fusenet'
 
 CRITERION:
-    NAME: 'softmax+ce'
+  NAME: 'softmax+ce'
 
 OPTIMIZER:
-    NAME: 'adam'
-    LR: 0.001
+  NAME: 'adam'
+  LR: 0.001
 
 SCHEDULER:
-    NAME: 'plateau'
-    MODE: 'min'
-    FACTOR: 0.1
-    PATIENCE: 2
+  NAME: 'plateau'
+  MODE: 'min'
+  FACTOR: 0.1
+  PATIENCE: 2
 
 EPOCHS: 40

@@ -9,6 +9,7 @@ class ResNet(nn.Module):
     def __init__(self, in_channels: int, num_classes: int, depth: int, pretrained=True,
                  replace_stride_with_dilation=None, return_features: bool = False):
         super(ResNet, self).__init__()
+        self.in_channels = in_channels
         self.return_features = return_features
         self.model_name = 'resnet{}'.format(depth)
         model = getattr(models, self.model_name)(replace_stride_with_dilation=replace_stride_with_dilation)
@@ -22,7 +23,7 @@ class ResNet(nn.Module):
 
         if pretrained:
             model = load_pretrained_models(model, self.model_name)
-        model.conv1 = nn.Conv2d(in_channels, model.conv1.out_channels, 7, stride=2, padding=3, bias=False)
+        model.conv1 = nn.Conv2d(self.in_channels, model.conv1.out_channels, 7, stride=2, padding=3, bias=False)
 
         self.layer0 = nn.Sequential(
             model.conv1,
@@ -42,9 +43,9 @@ class ResNet(nn.Module):
         x = self.layer2(x)
         x = self.layer3(x)
         x = self.layer4(x)
-        x = self.avgpool(x)
         if self.return_features:
             return x
+        x = self.avgpool(x)
         x = torch.flatten(x, 1)
         x = self.fc(x)
         return x
