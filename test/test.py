@@ -27,7 +27,7 @@ def parse_args():
                         help='device for test')
     parser.add_argument('--path',
                         type=str,
-                        default=os.path.join('runs', datetime.now().strftime('%Y%m%d-%H%M%S-test')),
+                        default=os.path.join('../runs', datetime.now().strftime('%Y%m%d-%H%M%S-test')),
                         help='path for experiment output files')
     args = parser.parse_args()
     return args
@@ -86,10 +86,7 @@ def main():
             x, label = x.float().to(args.device), label.to(args.device)
             y = model(x)
 
-            if NUM_CLASSES > 2:
-                pred = y.data.cpu().numpy().argmax(axis=1)
-            else:
-                pred = (y.data.cpu().numpy() > 0.5).squeeze(1)
+            pred = y.data.cpu().numpy().argmax(axis=1)
             label = label.data.cpu().numpy()
             metric.add(pred, label)
     PA, mPA, Ps, Rs, F1S = metric.PA(), metric.mPA(), metric.Ps(), metric.Rs(), metric.F1s()

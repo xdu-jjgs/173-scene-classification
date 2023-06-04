@@ -202,8 +202,7 @@ def worker(rank_gpu, args):
             iteration += 1
 
             x, label = x.to(device), label.to(device)
-            out, weights = omoe(x)
-            f, y = out
+            y, weights = omoe(x)
             # print("Y shape: {}, label shape:;{}".format(y.shape, label.shape))
             loss = criterion(y, label)
             train_loss += loss.item()
@@ -258,8 +257,7 @@ def worker(rank_gpu, args):
         with torch.no_grad():  # disable gradient back-propagation
             for x, label in val_bar:
                 x, label = x.to(device), label.to(device)
-                out, weights = omoe(x)
-                f, y = out
+                y, weights = omoe(x)
 
                 loss = criterion(y, label)
                 val_loss += loss.item()

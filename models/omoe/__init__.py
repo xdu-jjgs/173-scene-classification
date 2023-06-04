@@ -5,7 +5,7 @@ __all__ = [
 ]
 
 '''
-python train/classifier/train.py configs/sar_msi_5000_average_0,6,8,10,15,16/omoe.yaml ^
+python train/omoe/train.py configs/sar_msi_5000_average_0,6,8,10,15,16/omoe.yaml ^
         --path ./runs/sar_msi_5000_average_0,6,8,10,15,16/omoe-train ^
         --nodes 1 ^
         --gpus 1 ^
@@ -21,7 +21,7 @@ python test.py runs/sar_msi_5000_average_0,6,8,10,15,16/omoe-train/config.yaml ^
         --path runs/sar_msi_5000_average_0,6,8,10,15,16/omoe-test-last ^
         --device cuda:0
         
-python train/classifier/train.py configs/vnr_msi/omoe.yaml ^
+python train/omoe/train.py configs/vnr_msi/omoe.yaml ^
         --path ./runs/vnr_msi/omoe-train ^
         --nodes 1 ^
         --gpus 1 ^

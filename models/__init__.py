@@ -33,7 +33,7 @@ def build_model(num_channels, num_classes, model_name: str = None, return_featur
     elif model_name == 'vgg16':
         return VGG(num_channels, num_classes, depth=16)
     elif model_name == 'omoe':
-        backbone_ = [build_model(num_channels, num_classes, i) for i in CFG.MODEL.EXPERTS]
+        backbone_ = [build_model(num_channels, num_classes, i, return_features=True) for i in CFG.MODEL.EXPERTS]
         return OMOE(num_classes, backbone_)
     elif '_fusenet' in model_name:
         classifier1 = build_model(num_channels[0], num_classes, model_name.split('_')[0], return_features=True)

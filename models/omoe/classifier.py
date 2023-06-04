@@ -37,7 +37,7 @@ class ImageClassifier(nn.Module):
         x = self.layer1(x)
         x = self.layer2(x)
         out = self.head(x)
-        return x, out
+        return out
 
 
 class MultiHeadClassifier(nn.Module):
