@@ -27,4 +27,4 @@ class Gate(nn.Module):
             x = torch.squeeze(x, 2)
         x = self.layer1(x)
         out = self.head(x)
-        return x, out
+        return out
