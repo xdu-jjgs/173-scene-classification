@@ -12,7 +12,7 @@ class OMOEFusion(nn.Module):
         super(OMOEFusion, self).__init__()
         # backbone输入通道数
         pool_size = 6
-        self.num_channels = experts[0].in_channels
+        self.num_channels = sum(i.in_channels for i in experts)
         self.experts = nn.ModuleList(experts)
         self.gates = Gate(self.num_channels * pool_size * pool_size, len(experts))
         self.classifier = ImageClassifier(experts[0].out_channels, num_classes)
