@@ -85,7 +85,7 @@ def main():
         for batch, (x, label) in enumerate(test_bar):
             # change DoubleTensor x to FloatTensor
             sen1, sen2 = x
-            sen1, sen2, label = sen1.to(device), sen2.to(device), label.to(device)
+            sen1, sen2, label = sen1.float().to(device), sen2.float().to(device), label.to(device)
             y, weights = model((sen1, sen2))
 
             pred = y.data.cpu().numpy().argmax(axis=1)
